@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import java.util.List;
 
 @Repository
@@ -63,6 +64,26 @@ public class UserDao implements GenericDao<User, Integer> {
         } catch (Exception e) {
             e.printStackTrace();
             throw new DbException("Exception while getting user with id = " + id);
+        }
+    }
+
+    public List getByFirstName(String firstName) throws DbException {
+        try {
+            Query query = entityManager.createQuery("from User c where c.firstName:=fisrtName");
+            query.setParameter("firstName", firstName);
+            return query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new DbException("Exception while getting user with first name = " + firstName);
+        }
+    }
+
+    public User getByEmail(String email) throws DbException {
+        try {
+            return entityManager.find(User.class, email);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new DbException("Exception while getting user with email = " + email);
         }
     }
 }
