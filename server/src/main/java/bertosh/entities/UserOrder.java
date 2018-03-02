@@ -16,9 +16,9 @@ public class UserOrder {
     private Date date;
     @Column
     private double price;
-    @Column
+    @OneToOne
     private User idWorker;
-    @Column
+    @OneToOne
     private User idCustomer;
 
     public UserOrder() {
