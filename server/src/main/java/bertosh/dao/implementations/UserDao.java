@@ -67,17 +67,6 @@ public class UserDao implements GenericDao<User, Integer> {
         }
     }
 
-    public List getByFirstName(String firstName) throws DbException {
-        try {
-            Query query = entityManager.createQuery("from User c where c.firstName:=fisrtName");
-            query.setParameter("firstName", firstName);
-            return query.getResultList();
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new DbException("Exception while getting user with first name = " + firstName);
-        }
-    }
-
     public User getByEmail(String email) throws DbException {
         try {
             return entityManager.find(User.class, email);

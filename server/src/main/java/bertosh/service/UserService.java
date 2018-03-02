@@ -73,4 +73,13 @@ public class UserService {
             throw new DbException("Exception in getting user by id transaction");
         }
     }
+
+    public User getByEmail(String email) throws DbException {
+        try {
+            return dao.getByEmail(email);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new DbException("Exception in getting user by email transaction");
+        }
+    }
 }
