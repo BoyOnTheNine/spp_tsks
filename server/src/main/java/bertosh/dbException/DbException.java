@@ -1,4 +1,4 @@
-package dbException;
+package bertosh.dbException;
 
 public class DbException extends Exception {
 

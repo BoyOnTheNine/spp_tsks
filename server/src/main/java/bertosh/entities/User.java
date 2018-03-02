@@ -1,9 +1,10 @@
-package entities;
+package bertosh.entities;
 
 import javax.persistence.*;
-import java.util.*;
 import java.util.Objects;
 
+@Entity
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue

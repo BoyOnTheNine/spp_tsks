@@ -1,8 +1,8 @@
-package dao.implementations;
+package bertosh.dao.implementations;
 
-import dao.GenericDao;
-import dbException.DbException;
-import entities.User;
+import bertosh.dao.GenericDao;
+import bertosh.dbException.DbException;
+import bertosh.entities.User;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;

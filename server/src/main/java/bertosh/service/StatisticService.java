@@ -1,8 +1,8 @@
-package service;
+package bertosh.service;
 
-import dao.implementations.StatisticDao;
-import dbException.DbException;
-import entities.Statistic;
+import bertosh.dao.implementations.StatisticDao;
+import bertosh.dbException.DbException;
+import bertosh.entities.Statistic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

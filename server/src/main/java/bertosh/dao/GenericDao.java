@@ -1,6 +1,6 @@
-package dao;
+package bertosh.dao;
 
-import dbException.DbException;
+import bertosh.dbException.DbException;
 
 import java.io.Serializable;
 import java.util.*;

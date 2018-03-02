@@ -1,4 +1,4 @@
-package entities;
+package bertosh.entities;
 
 import javax.persistence.*;
 import java.util.Objects;

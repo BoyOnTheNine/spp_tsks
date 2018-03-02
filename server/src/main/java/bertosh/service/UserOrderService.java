@@ -1,8 +1,8 @@
-package service;
+package bertosh.service;
 
-import dao.implementations.UserOrderDao;
-import dbException.DbException;
-import entities.UserOrder;
+import bertosh.dao.implementations.UserOrderDao;
+import bertosh.dbException.DbException;
+import bertosh.entities.UserOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,8 +1,8 @@
-package service;
+package bertosh.service;
 
-import dao.implementations.CategoryDao;
-import dbException.DbException;
-import entities.Category;
+import bertosh.dao.implementations.CategoryDao;
+import bertosh.dbException.DbException;
+import bertosh.entities.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
