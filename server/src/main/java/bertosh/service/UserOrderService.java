@@ -3,6 +3,8 @@ package bertosh.service;
 import bertosh.dao.implementations.UserOrderDao;
 import bertosh.dbException.DbException;
 import bertosh.entities.UserOrder;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,11 +17,13 @@ public class UserOrderService {
     @Autowired
     private UserOrderDao dao;
 
+    private final static Logger logger = LogManager.getLogger(UserOrderService.class);
+
     public UserOrder create(UserOrder userOrder) throws DbException {
         try {
             return dao.create(userOrder);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new DbException("Exception in creating new user order transaction");
         }
     }
@@ -34,7 +38,7 @@ public class UserOrderService {
             userOrder.setPrice(updateUserOrder.getPrice());
             return dao.update(userOrder);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new DbException("Exception in updating user order transaction");
         }
     }
@@ -49,7 +53,7 @@ public class UserOrderService {
                 return false;
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new DbException("Exception in deleting user order transaction");
         }
     }
@@ -58,7 +62,7 @@ public class UserOrderService {
         try {
             return dao.getAll();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new DbException("Exception in creating user order list transaction");
         }
     }
@@ -67,7 +71,7 @@ public class UserOrderService {
         try {
             return dao.getById(id);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new DbException("Exception in getting user order by id transaction");
         }
     }

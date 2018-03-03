@@ -3,6 +3,8 @@ package bertosh.service;
 import bertosh.dao.implementations.StatisticDao;
 import bertosh.dbException.DbException;
 import bertosh.entities.Statistic;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,12 +16,14 @@ public class StatisticService {
     
     @Autowired
     private StatisticDao dao;
+
+    private final static Logger logger = LogManager.getLogger(StatisticService.class);
     
     public Statistic create(Statistic statistic) throws DbException {
         try {
             return dao.create(statistic);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new DbException("Exception in creating new statistic transaction");
         }
     }
@@ -34,7 +38,7 @@ public class StatisticService {
             statistic.setIdUser(updateStatistic.getIdUser());
             return dao.update(statistic);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new DbException("Exception in updating statistic transaction");
         }
     }
@@ -49,7 +53,7 @@ public class StatisticService {
                 return false;
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new DbException("Exception in deleting statistic transaction");
         }
     }
@@ -58,7 +62,7 @@ public class StatisticService {
         try {
             return dao.getAll();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new DbException("Exception in creating statistic list transaction");
         } 
     }
@@ -67,7 +71,7 @@ public class StatisticService {
         try {
             return dao.getById(id);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new DbException("Exception in getting statistic by id transaction");
         }
     }

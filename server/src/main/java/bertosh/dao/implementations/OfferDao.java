@@ -3,6 +3,8 @@ package bertosh.dao.implementations;
 import bertosh.dao.GenericDao;
 import bertosh.dbException.DbException;
 import bertosh.entities.Offer;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -15,13 +17,18 @@ public class OfferDao implements GenericDao<Offer, Integer> {
     @PersistenceContext
     private EntityManager entityManager;
 
+    private final static Logger logger = LogManager.getLogger(OfferDao.class);
+
+    public OfferDao() {
+    }
+
     @Override
     public Offer create(Offer offer) throws DbException {
         try {
             entityManager.persist(offer);
             return offer;
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new DbException("Exception while persisting new offer");
         }
     }
@@ -31,7 +38,7 @@ public class OfferDao implements GenericDao<Offer, Integer> {
         try {
             return entityManager.merge(offer);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new DbException("Exception while updating offer with id = " + offer.getId());
         }
     }
@@ -41,7 +48,7 @@ public class OfferDao implements GenericDao<Offer, Integer> {
         try {
             entityManager.remove(offer);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new DbException("Exception while deleting offer with id = " + offer.getId());
         }
     }
@@ -51,7 +58,7 @@ public class OfferDao implements GenericDao<Offer, Integer> {
         try {
             return entityManager.createQuery("from Offer c").getResultList();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new DbException("Exception while getting list of all offers");
         }
     }
@@ -61,7 +68,7 @@ public class OfferDao implements GenericDao<Offer, Integer> {
         try {
             return entityManager.find(Offer.class, id);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new DbException("Exception while getting offer with id = " + id);
         }
     }

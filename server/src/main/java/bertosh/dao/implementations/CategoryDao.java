@@ -3,6 +3,8 @@ package bertosh.dao.implementations;
 import bertosh.dao.GenericDao;
 import bertosh.dbException.DbException;
 import bertosh.entities.Category;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -15,13 +17,18 @@ public class CategoryDao implements GenericDao<Category, Integer> {
     @PersistenceContext
     private EntityManager entityManager;
 
+    private final static Logger logger = LogManager.getLogger(CategoryDao.class);
+
+    public CategoryDao() {
+    }
+
     @Override
     public Category create(Category category) throws DbException {
         try {
             entityManager.persist(category);
             return category;
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new DbException("Exception while persisting new category");
         }
     }
@@ -31,7 +38,7 @@ public class CategoryDao implements GenericDao<Category, Integer> {
         try {
             return entityManager.merge(category);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new DbException("Exception while updating category with id = " + category.getId());
         }
     }
@@ -41,7 +48,7 @@ public class CategoryDao implements GenericDao<Category, Integer> {
         try {
             entityManager.remove(category);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new DbException("Exception while deleting category with id = " + category.getId());
         }
     }
@@ -51,7 +58,7 @@ public class CategoryDao implements GenericDao<Category, Integer> {
         try {
             return entityManager.createQuery("from Category c").getResultList();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new DbException("Exception while getting list of all categories");
         }
     }
@@ -61,7 +68,7 @@ public class CategoryDao implements GenericDao<Category, Integer> {
         try {
             return entityManager.find(Category.class, id);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new DbException("Exception while getting category with id = " + id);
         }
     }
