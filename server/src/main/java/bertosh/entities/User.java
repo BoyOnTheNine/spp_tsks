@@ -2,13 +2,14 @@ package bertosh.entities;
 
 import javax.persistence.*;
 import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Table(name = "users")
 public class User {
     @Id
     @GeneratedValue
-    private int id;
+    private long id;
     @Column(length = 30)
     private String firstName;
     @Column(length = 30)
@@ -27,6 +28,13 @@ public class User {
     private String description;
     @Column
     private double rating;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_role", joinColumns
+            = @JoinColumn(name = "user_id",
+            referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id",
+                    referencedColumnName = "id"))
+    private List<Role> roles;
 
     public User() {
 
@@ -106,6 +114,14 @@ public class User {
 
     public void setRating(double rating) {
         this.rating = rating;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 
     @Override

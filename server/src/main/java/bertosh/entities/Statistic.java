@@ -11,7 +11,7 @@ public class Statistic {
 
     @Id
     @GeneratedValue
-    private int id;
+    private long id;
     @Column
     private Date beginDate;
     @Column
@@ -27,7 +27,7 @@ public class Statistic {
 
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 

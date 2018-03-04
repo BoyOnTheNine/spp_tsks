@@ -9,7 +9,7 @@ import java.util.Objects;
 public class UserOrder {
     @Id
     @GeneratedValue
-    private int id;
+    private long id;
     @Column
     private String description;
     @Column

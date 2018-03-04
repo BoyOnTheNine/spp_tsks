@@ -8,7 +8,7 @@ import java.util.Objects;
 public class Category {
     @Id
     @GeneratedValue
-    private int id;
+    private long id;
     @Column(length = 25)
     private String name;
 
@@ -16,7 +16,7 @@ public class Category {
 
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
