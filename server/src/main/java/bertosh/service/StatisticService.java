@@ -33,9 +33,9 @@ public class StatisticService {
             Statistic statistic = dao.getById(id);
             statistic.setBeginDate(updateStatistic.getBeginDate());
             statistic.setEndDate(updateStatistic.getEndDate());
-            statistic.setIdCustomer(updateStatistic.getIdCustomer());
-            statistic.setIdOrder(updateStatistic.getIdOrder());
-            statistic.setIdUser(updateStatistic.getIdUser());
+            statistic.setCustomer(updateStatistic.getCustomer());
+            statistic.setUserOrder(updateStatistic.getUserOrder());
+            statistic.setUsers(updateStatistic.getUsers());
             return dao.update(statistic);
         } catch (Exception e) {
             logger.error(e.getMessage());

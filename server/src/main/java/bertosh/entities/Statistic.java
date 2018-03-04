@@ -2,6 +2,7 @@ package bertosh.entities;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Objects;
 
 @Entity
@@ -15,12 +16,12 @@ public class Statistic {
     private Date beginDate;
     @Column
     private Date endDate;
-    @Column
-    private int idOrder;
-    @Column
-    private int idUser;
-    @Column
-    private int idCustomer;
+    @OneToOne
+    private UserOrder userOrder;
+    @OneToOne
+    private User user;
+    @OneToOne
+    private User customer;
 
     public Statistic() {
 
@@ -38,24 +39,24 @@ public class Statistic {
         return endDate;
     }
 
-    public int getIdOrder() {
-        return idOrder;
+    public UserOrder getUserOrder() {
+        return userOrder;
     }
 
-    public int getIdCustomer() {
-        return idCustomer;
+    public User getCustomer() {
+        return customer;
     }
 
-    public int getIdUser() {
-        return idUser;
+    public User getUsers() {
+        return user;
     }
 
-    public void setIdUser(int idUser) {
-        this.idUser = idUser;
+    public void setUsers(User users) {
+        this.user = users;
     }
 
-    public void setIdCustomer(int idCustomer) {
-        this.idCustomer = idCustomer;
+    public void setCustomer(User customer) {
+        this.customer = customer;
     }
 
     public void setBeginDate(Date beginDate) {
@@ -66,13 +67,13 @@ public class Statistic {
         this.endDate = endDate;
     }
 
-    public void setIdOrder(int idOrder) {
-        this.idOrder = idOrder;
+    public void setUserOrder(UserOrder userOrder) {
+        this.userOrder = userOrder;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, beginDate, endDate, idCustomer, idOrder, idUser);
+        return Objects.hash(id, beginDate, endDate, customer, userOrder, user);
     }
 
     @Override
@@ -83,9 +84,9 @@ public class Statistic {
         return id == statistic.id &&
                 Objects.equals(beginDate, statistic.beginDate) &&
                 Objects.equals(endDate, statistic.endDate) &&
-                Objects.equals(idOrder, statistic.idOrder) &&
-                Objects.equals(idCustomer, statistic.idCustomer) &&
-                Objects.equals(idUser, statistic.idUser);
+                Objects.equals(userOrder, statistic.userOrder) &&
+                Objects.equals(customer, statistic.customer) &&
+                Objects.equals(user, statistic.user);
     }
 
     @Override
@@ -94,9 +95,9 @@ public class Statistic {
         sb.append("id=").append(id);
         sb.append(", beginDate='").append(beginDate).append('\'');
         sb.append(", endDate='").append(endDate).append('\'');
-        sb.append(", idUser='").append(idUser).append('\'');
-        sb.append(", idCustomer='").append(idCustomer).append('\'');
-        sb.append(", idOrder='").append(idOrder).append('\'');
+        sb.append(", user='").append(user).append('\'');
+        sb.append(", customer='").append(customer).append('\'');
+        sb.append(", userOrder='").append(userOrder).append('\'');
         sb.append('}');
         return sb.toString();
     }

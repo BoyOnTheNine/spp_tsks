@@ -9,11 +9,11 @@ public class User {
     @Id
     @GeneratedValue
     private int id;
-    @Column
+    @Column(length = 30)
     private String firstName;
-    @Column
+    @Column(length = 30)
     private String lastName;
-    @Column
+    @Column(length = 50)
     private String email;
     @Column
     private String phoneNumber;

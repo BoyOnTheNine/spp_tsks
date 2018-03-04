@@ -10,7 +10,7 @@ public class Offer {
     @Id
     @GeneratedValue
     private int id;
-    @Column
+    @Column(length = 30)
     private String name;
     @Column
     private String description;
