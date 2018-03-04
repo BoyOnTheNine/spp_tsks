@@ -8,9 +8,8 @@ import java.util.Objects;
 @Entity
 @Table(name = "statistic")
 public class Statistic {
-
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column
     private Date beginDate;
