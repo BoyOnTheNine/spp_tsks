@@ -3,6 +3,8 @@ package bertosh.service;
 import bertosh.dao.implementations.OfferDao;
 import bertosh.dbException.DbException;
 import bertosh.entities.Offer;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,11 +17,13 @@ public class OfferService {
     @Autowired
     private OfferDao dao;
 
+    private final static Logger logger = LogManager.getLogger(OfferService.class);
+
     public Offer create(Offer offer) throws DbException {
         try {
             return dao.create(offer);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new DbException("Exception in creating new offer transaction");
         }
     }
@@ -33,7 +37,7 @@ public class OfferService {
             offer.setDescription(updateOffer.getDescription());
             return dao.update(offer);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new DbException("Exception in updating offer transaction");
         }
     }
@@ -48,7 +52,7 @@ public class OfferService {
                 return false;
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new DbException("Exception in deleting offer transaction");
         }
     }
@@ -57,7 +61,7 @@ public class OfferService {
         try {
             return dao.getAll();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new DbException("Exception in creating offer list transaction");
         }
     }
@@ -66,7 +70,7 @@ public class OfferService {
         try {
             return dao.getById(id);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new DbException("Exception in getting offer by id transaction");
         }
     }

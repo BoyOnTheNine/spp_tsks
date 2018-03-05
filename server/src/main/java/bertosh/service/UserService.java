@@ -3,6 +3,9 @@ package bertosh.service;
 import bertosh.dao.implementations.UserDao;
 import bertosh.dbException.DbException;
 import bertosh.entities.User;
+import ch.qos.logback.classic.util.LogbackMDCAdapter;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,12 +17,14 @@ public class UserService {
     
     @Autowired
     private UserDao dao;
+
+    private final static Logger logger = LogManager.getLogger(UserService.class);
     
     public User create(User user) throws DbException {
         try {
             return dao.create(user);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new DbException("Exception in creating new user transaction");
         }
     }
@@ -36,7 +41,7 @@ public class UserService {
             user.setRating(updateUser.getRating());
             return dao.update(user);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new DbException("Exception in updating user transaction");
         }
     }
@@ -51,7 +56,7 @@ public class UserService {
                 return false;
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new DbException("Exception in deleting user transaction");
         }
     }
@@ -60,7 +65,7 @@ public class UserService {
         try {
             return dao.getAll();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new DbException("Exception in creating user list transaction");
         }
     }
@@ -69,7 +74,7 @@ public class UserService {
         try {
             return dao.getById(id);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new DbException("Exception in getting user by id transaction");
         }
     }
@@ -78,7 +83,7 @@ public class UserService {
         try {
             return dao.getByEmail(email);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new DbException("Exception in getting user by email transaction");
         }
     }

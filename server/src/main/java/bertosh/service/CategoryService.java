@@ -3,6 +3,8 @@ package bertosh.service;
 import bertosh.dao.implementations.CategoryDao;
 import bertosh.dbException.DbException;
 import bertosh.entities.Category;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,11 +17,13 @@ public class CategoryService {
     @Autowired
     private CategoryDao dao;
 
+    private final static Logger logger = LogManager.getLogger(CategoryService.class);
+
     public Category create(Category category) throws DbException {
         try {
             return dao.create(category);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new DbException("Exception in creating new category transaction");
         }
     }
@@ -30,7 +34,7 @@ public class CategoryService {
             category.setName(updateCategory.getName());
             return dao.update(category);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new DbException("Exception in updating category transaction");
         }
     }
@@ -45,7 +49,7 @@ public class CategoryService {
                 return false;
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new DbException("Exception in deleting category transaction");
         }
     }
@@ -54,7 +58,7 @@ public class CategoryService {
         try {
             return dao.getAll();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new DbException("Exception in creating category list transaction");
         }
     }
@@ -63,7 +67,7 @@ public class CategoryService {
         try {
             return dao.getById(id);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new DbException("Exception in getting category by id transaction");
         }
     }

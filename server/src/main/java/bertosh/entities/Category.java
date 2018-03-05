@@ -7,16 +7,16 @@ import java.util.Objects;
 @Table(name = "categories")
 public class Category {
     @Id
-    @GeneratedValue
-    private int id;
-    @Column
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+    @Column(length = 25)
     private String name;
 
     public Category() {
 
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 

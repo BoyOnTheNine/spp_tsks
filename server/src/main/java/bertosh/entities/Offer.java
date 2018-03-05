@@ -2,15 +2,15 @@ package bertosh.entities;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.Objects;
 
 @Entity
 @Table(name = "offers")
 public class Offer {
-
     @Id
-    @GeneratedValue
-    private int id;
-    @Column
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+    @Column(length = 30)
     private String name;
     @Column
     private String description;
@@ -23,7 +23,7 @@ public class Offer {
 
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -60,17 +60,32 @@ public class Offer {
     }
 
     @Override
-    public String toString() {
-        return super.toString();
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Offer offer = (Offer) o;
+
+        if (id != offer.id) return false;
+        if (name != null ? !name.equals(offer.name) : offer.name != null) return false;
+        if (description != null ? !description.equals(offer.description) : offer.description != null) return false;
+        if (date != null ? !date.equals(offer.date) : offer.date != null) return false;
+        return category != null ? category.equals(offer.category) : offer.category == null;
     }
 
     @Override
     public int hashCode() {
-        return super.hashCode();
+        return Objects.hash(id, name, date, description, category);
     }
 
     @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
+    public String toString() {
+        return "Offer{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", date=" + date +
+                ", category=" + category +
+                '}';
     }
 }
