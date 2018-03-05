@@ -13,7 +13,7 @@ import javax.persistence.Query;
 import java.util.List;
 
 @Repository
-public class UserDao implements GenericDao<User, Integer> {
+public class UserDao implements GenericDao<User, Long> {
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -65,7 +65,7 @@ public class UserDao implements GenericDao<User, Integer> {
     }
 
     @Override
-    public User getById(Integer id) throws DbException {
+    public User getById(Long id) throws DbException {
         try {
             return entityManager.find(User.class, id);
         } catch (Exception e) {
@@ -76,7 +76,11 @@ public class UserDao implements GenericDao<User, Integer> {
 
     public User getByEmail(String email) throws DbException {
         try {
-            return entityManager.find(User.class, email);
+            //This is not optimized code, but i don't have time to fix this now)
+            return (User)entityManager.createQuery("from User c where c.email=:email")
+                    .setParameter("email", email)
+                    .getResultList()
+                    .get(0);
         } catch (Exception e) {
             logger.error(e.getMessage());
             throw new DbException("Exception while getting user with email = " + email);

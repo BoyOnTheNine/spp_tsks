@@ -12,7 +12,7 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
-public class UserOrderDao implements GenericDao<UserOrder, Integer> {
+public class UserOrderDao implements GenericDao<UserOrder, Long> {
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -64,7 +64,7 @@ public class UserOrderDao implements GenericDao<UserOrder, Integer> {
     }
 
     @Override
-    public UserOrder getById(Integer id) throws DbException {
+    public UserOrder getById(Long id) throws DbException {
         try {
             return entityManager.find(UserOrder.class, id);
         } catch (Exception e) {

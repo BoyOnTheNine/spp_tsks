@@ -8,7 +8,7 @@ import java.util.*;
 @Table(name = "users")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private long id;
     @Column(length = 30)
     private String firstName;
@@ -138,29 +138,30 @@ public class User {
                 Objects.equals(login, user.login) &&
                 Objects.equals(description, user.description) &&
                 Objects.equals(rating, user.rating) &&
+                Objects.equals(roles, user.roles) &&
                 Objects.equals(hash, user.hash);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id, firstName, lastName, phoneNumber,
-                email, country, login, hash, description, rating);
+                email, country, login, hash, description, rating, roles);
     }
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("User{");
-        sb.append("id=").append(id);
-        sb.append(", firstName='").append(firstName).append('\'');
-        sb.append(", lastName='").append(lastName).append('\'');
-        sb.append(", phoneNumber='").append(phoneNumber).append('\'');
-        sb.append(", email='").append(email).append('\'');
-        sb.append(", country='").append(country).append('\'');
-        sb.append(", login='").append(login).append('\'');
-        sb.append(", hash='").append(hash).append('\'');
-        sb.append(", description='").append(description).append('\'');
-        sb.append(", rating='").append(rating).append('\'');
-        sb.append('}');
-        return sb.toString();
+        return "User{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", country='" + country + '\'' +
+                ", login='" + login + '\'' +
+                ", hash=" + hash +
+                ", description='" + description + '\'' +
+                ", rating=" + rating +
+                ", roles=" + roles +
+                '}';
     }
 }

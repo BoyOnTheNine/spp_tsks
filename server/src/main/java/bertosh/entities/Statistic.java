@@ -9,7 +9,7 @@ import java.util.Objects;
 @Table(name = "statistic")
 public class Statistic {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private long id;
     @Column
     private Date beginDate;

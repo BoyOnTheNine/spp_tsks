@@ -28,14 +28,24 @@ public class StatisticService {
         }
     }
     
-    public Statistic update(int id, Statistic updateStatistic) throws DbException {
+    public Statistic update(Long id, Statistic updateStatistic) throws DbException {
         try {
             Statistic statistic = dao.getById(id);
-            statistic.setBeginDate(updateStatistic.getBeginDate());
-            statistic.setEndDate(updateStatistic.getEndDate());
-            statistic.setCustomer(updateStatistic.getCustomer());
-            statistic.setUserOrder(updateStatistic.getUserOrder());
-            statistic.setUsers(updateStatistic.getUsers());
+            if (updateStatistic.getBeginDate() != null) {
+                statistic.setBeginDate(updateStatistic.getBeginDate());
+            }
+            if (updateStatistic.getEndDate() != null) {
+                statistic.setEndDate(updateStatistic.getEndDate());
+            }
+            if (updateStatistic.getCustomer() != null) {
+                statistic.setCustomer(updateStatistic.getCustomer());
+            }
+            if (updateStatistic.getUserOrder() != null) {
+                statistic.setUserOrder(updateStatistic.getUserOrder());
+            }
+            if (updateStatistic.getUsers() != null) {
+                statistic.setUsers(updateStatistic.getUsers());
+            }
             return dao.update(statistic);
         } catch (Exception e) {
             logger.error(e.getMessage());
@@ -43,7 +53,7 @@ public class StatisticService {
         }
     }
     
-    public boolean delete(int id) throws DbException {
+    public boolean delete(Long id) throws DbException {
         try {
             Statistic statistic = dao.getById(id);
             if (statistic != null) {
@@ -67,7 +77,7 @@ public class StatisticService {
         } 
     }
     
-    public Statistic getById(int id) throws DbException {
+    public Statistic getById(Long id) throws DbException {
         try {
             return dao.getById(id);
         } catch (Exception e) {

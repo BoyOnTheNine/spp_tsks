@@ -28,7 +28,7 @@ public class CategoryController {
     }
 
     @GetMapping("/categories/{id}")
-    public ResponseEntity getById(@PathVariable Integer id) throws DbException {
+    public ResponseEntity getById(@PathVariable Long id) throws DbException {
         Category category = service.getById(id);
         if (category != null) {
             return new ResponseEntity<>(category, HttpStatus.OK);
@@ -38,7 +38,7 @@ public class CategoryController {
     }
 
     @PutMapping("/categories/{id}")
-    public ResponseEntity update(@PathVariable Integer id, @RequestBody Category category) throws DbException {
+    public ResponseEntity update(@PathVariable Long id, @RequestBody Category category) throws DbException {
         category = service.update(id, category);
         if (category != null) {
             return new ResponseEntity<>(category, HttpStatus.OK);
@@ -54,7 +54,7 @@ public class CategoryController {
     }
 
     @DeleteMapping("/categories/{id}")
-    public ResponseEntity delete(@PathVariable Integer id) throws DbException {
+    public ResponseEntity delete(@PathVariable Long id) throws DbException {
         if (service.delete(id)) {
             return new ResponseEntity(HttpStatus.OK);
         } else {

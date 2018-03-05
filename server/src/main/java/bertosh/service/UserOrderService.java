@@ -28,14 +28,24 @@ public class UserOrderService {
         }
     }
 
-    public UserOrder update(int id, UserOrder updateUserOrder) throws DbException {
+    public UserOrder update(Long id, UserOrder updateUserOrder) throws DbException {
         try {
             UserOrder userOrder = dao.getById(id);
-            userOrder.setDate(updateUserOrder.getDate());
-            userOrder.setDescription(updateUserOrder.getDescription());
-            userOrder.setIdCustomer(updateUserOrder.getIdCustomer());
-            userOrder.setIdUser(updateUserOrder.getIdUser());
-            userOrder.setPrice(updateUserOrder.getPrice());
+            if (updateUserOrder.getDate() != null) {
+                userOrder.setDate(updateUserOrder.getDate());
+            }
+            if (updateUserOrder.getDescription() != null) {
+                userOrder.setDescription(updateUserOrder.getDescription());
+            }
+            if (updateUserOrder.getIdCustomer() != null) {
+                userOrder.setIdCustomer(updateUserOrder.getIdCustomer());
+            }
+            if (updateUserOrder.getIdUser() != null) {
+                userOrder.setIdUser(updateUserOrder.getIdUser());
+            }
+            if (updateUserOrder.getPrice() != 0) {
+                userOrder.setPrice(updateUserOrder.getPrice());
+            }
             return dao.update(userOrder);
         } catch (Exception e) {
             logger.error(e.getMessage());
@@ -43,7 +53,7 @@ public class UserOrderService {
         }
     }
 
-    public boolean delete(int id) throws DbException {
+    public boolean delete(Long id) throws DbException {
         try {
             UserOrder userOrder = dao.getById(id);
             if (userOrder != null) {
@@ -67,7 +77,7 @@ public class UserOrderService {
         }
     }
 
-    public UserOrder getById(int id) throws DbException {
+    public UserOrder getById(Long id) throws DbException {
         try {
             return dao.getById(id);
         } catch (Exception e) {

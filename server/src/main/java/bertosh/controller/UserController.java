@@ -28,7 +28,7 @@ public class UserController {
     }
 
     @GetMapping("/users/{id}")
-    public ResponseEntity getById(@PathVariable Integer id) throws DbException {
+    public ResponseEntity getById(@PathVariable Long id) throws DbException {
         User user = service.getById(id);
         if (user != null) {
             return new ResponseEntity<>(user, HttpStatus.OK);
@@ -37,7 +37,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/users/{email}")
+    @GetMapping("/users/byemail/{email}")
     public ResponseEntity getByEmail(@PathVariable String email) throws DbException {
         User user = service.getByEmail(email);
         if (user != null) {
@@ -54,7 +54,7 @@ public class UserController {
     }
 
     @PutMapping("/users/{id}")
-    public ResponseEntity update(@PathVariable Integer id, @RequestBody User user) throws DbException {
+    public ResponseEntity update(@PathVariable Long id, @RequestBody User user) throws DbException {
         user = service.update(id, user);
         if (user != null) {
             return new ResponseEntity<>(user, HttpStatus.OK);
@@ -64,7 +64,7 @@ public class UserController {
     }
 
     @DeleteMapping("/users/{id}")
-    public ResponseEntity delete(@PathVariable Integer id) throws DbException {
+    public ResponseEntity delete(@PathVariable Long id) throws DbException {
         if(service.delete(id)) {
             return new ResponseEntity(HttpStatus.OK);
         } else {

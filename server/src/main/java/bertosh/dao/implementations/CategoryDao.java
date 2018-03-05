@@ -12,7 +12,7 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
-public class CategoryDao implements GenericDao<Category, Integer> {
+public class CategoryDao implements GenericDao<Category, Long> {
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -64,7 +64,7 @@ public class CategoryDao implements GenericDao<Category, Integer> {
     }
 
     @Override
-    public Category getById(Integer id) throws DbException {
+    public Category getById(Long id) throws DbException {
         try {
             return entityManager.find(Category.class, id);
         } catch (Exception e) {

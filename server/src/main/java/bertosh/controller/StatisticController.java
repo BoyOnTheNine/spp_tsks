@@ -28,7 +28,7 @@ public class StatisticController {
     }
 
     @GetMapping("/statistics/{id}")
-    public ResponseEntity getById(@PathVariable Integer id) throws DbException {
+    public ResponseEntity getById(@PathVariable Long id) throws DbException {
         Statistic statistic = service.getById(id);
         if (statistic != null) {
             return new ResponseEntity<>(statistic, HttpStatus.OK);
@@ -38,7 +38,7 @@ public class StatisticController {
     }
 
     @PutMapping("/statistics/{id}")
-    public ResponseEntity update(@PathVariable Integer id, @RequestBody Statistic statistic) throws DbException {
+    public ResponseEntity update(@PathVariable Long id, @RequestBody Statistic statistic) throws DbException {
         statistic = service.update(id, statistic);
         if (statistic != null) {
             return new ResponseEntity<>(statistic, HttpStatus.OK);
@@ -54,7 +54,7 @@ public class StatisticController {
     }
 
     @DeleteMapping("/statistics/{id}")
-    public ResponseEntity delete(@PathVariable Integer id) throws DbException {
+    public ResponseEntity delete(@PathVariable Long id) throws DbException {
         if (service.delete(id)) {
             return new ResponseEntity(HttpStatus.OK);
         } else {

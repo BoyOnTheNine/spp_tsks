@@ -28,7 +28,7 @@ public class UserOrderController {
     }
 
     @GetMapping("/orders/{id}")
-    public ResponseEntity getById(@PathVariable Integer id) throws DbException {
+    public ResponseEntity getById(@PathVariable Long id) throws DbException {
         UserOrder userOrder = service.getById(id);
         if (userOrder != null) {
             return new ResponseEntity<>(userOrder, HttpStatus.OK);
@@ -38,7 +38,7 @@ public class UserOrderController {
     }
 
     @PutMapping("/orders/{id}")
-    public ResponseEntity update(@PathVariable Integer id, @RequestBody UserOrder userOrder) throws DbException {
+    public ResponseEntity update(@PathVariable Long id, @RequestBody UserOrder userOrder) throws DbException {
         userOrder = service.update(id, userOrder);
         if (userOrder != null) {
             return new ResponseEntity<>(userOrder, HttpStatus.OK);
@@ -54,7 +54,7 @@ public class UserOrderController {
     }
 
     @DeleteMapping("/orders/{id}")
-    public ResponseEntity delete(@PathVariable Integer id) throws DbException {
+    public ResponseEntity delete(@PathVariable Long id) throws DbException {
         if (service.delete(id)) {
             return new ResponseEntity(HttpStatus.OK);
         } else {
