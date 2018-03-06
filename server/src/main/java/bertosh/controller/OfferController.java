@@ -28,7 +28,7 @@ public class OfferController {
     }
 
     @GetMapping("/offers/{id}")
-    public ResponseEntity getById(@PathVariable Integer id) throws DbException {
+    public ResponseEntity getById(@PathVariable Long id) throws DbException {
         Offer offer = service.getById(id);
         if (offer != null) {
             return new ResponseEntity<>(offer, HttpStatus.OK);
@@ -38,7 +38,7 @@ public class OfferController {
     }
 
     @PutMapping("/offers/{id}")
-    public ResponseEntity update(@PathVariable Integer id, @RequestBody Offer offer) throws DbException {
+    public ResponseEntity update(@PathVariable Long id, @RequestBody Offer offer) throws DbException {
         offer = service.update(id, offer);
         if (offer != null) {
             return new ResponseEntity<>(offer, HttpStatus.OK);
@@ -54,7 +54,7 @@ public class OfferController {
     }
 
     @DeleteMapping("/offers/{id}")
-    public ResponseEntity delete(@PathVariable Integer id) throws DbException {
+    public ResponseEntity delete(@PathVariable Long id) throws DbException {
         if (service.delete(id)) {
             return new ResponseEntity(HttpStatus.OK);
         } else {

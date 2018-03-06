@@ -1,8 +1,8 @@
 package bertosh.controller;
 
 import bertosh.dbException.DbException;
-import bertosh.entities.Statistic;
-import bertosh.service.StatisticService;
+import bertosh.entities.Role;
+import bertosh.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api/v1")
-public class StatisticController {
+@RequestMapping("/api/v1")
+public class RoleController {
 
     @Autowired
-    private StatisticService service;
+    private RoleService service;
 
-    @GetMapping("/statistics")
+    @GetMapping("/roles")
     public ResponseEntity getAll() throws DbException {
         List list = service.getAll();
         if (list != null) {
@@ -27,33 +27,33 @@ public class StatisticController {
         }
     }
 
-    @GetMapping("/statistics/{id}")
+    @GetMapping("/roles/{id}")
     public ResponseEntity getById(@PathVariable Long id) throws DbException {
-        Statistic statistic = service.getById(id);
-        if (statistic != null) {
-            return new ResponseEntity<>(statistic, HttpStatus.OK);
+        Role role = service.getById(id);
+        if (role != null) {
+            return new ResponseEntity<>(role, HttpStatus.OK);
         } else {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
     }
 
-    @PutMapping("/statistics/{id}")
-    public ResponseEntity update(@PathVariable Long id, @RequestBody Statistic statistic) throws DbException {
-        statistic = service.update(id, statistic);
-        if (statistic != null) {
-            return new ResponseEntity<>(statistic, HttpStatus.OK);
+    @PutMapping("/roles/{id}")
+    public ResponseEntity update(@PathVariable Long id, @RequestBody Role role) throws DbException {
+        role = service.update(id, role);
+        if (role != null) {
+            return new ResponseEntity<>(role, HttpStatus.OK);
         } else {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
     }
 
-    @PostMapping("/statistics")
-    public ResponseEntity<Statistic> create(@RequestBody Statistic statistic) throws DbException {
-        statistic = service.create(statistic);
-        return new ResponseEntity<>(statistic, HttpStatus.CREATED);
+    @PostMapping("/roles")
+    public ResponseEntity<Role> create(@RequestBody Role role) throws DbException {
+        role = service.create(role);
+        return new ResponseEntity<>(role, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/statistics/{id}")
+    @DeleteMapping("/roles/{id}")
     public ResponseEntity delete(@PathVariable Long id) throws DbException {
         if (service.delete(id)) {
             return new ResponseEntity(HttpStatus.OK);

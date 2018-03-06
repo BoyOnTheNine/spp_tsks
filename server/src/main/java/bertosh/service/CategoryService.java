@@ -28,10 +28,12 @@ public class CategoryService {
         }
     }
 
-    public Category update(int id, Category updateCategory) throws DbException {
+    public Category update(Long id, Category updateCategory) throws DbException {
         try {
             Category category = dao.getById(id);
-            category.setName(updateCategory.getName());
+            if (updateCategory.getName() != null && !Objects.equals(updateCategory.getName(), category.getName())) {
+                category.setName(updateCategory.getName());
+            }
             return dao.update(category);
         } catch (Exception e) {
             logger.error(e.getMessage());
@@ -39,7 +41,7 @@ public class CategoryService {
         }
     }
 
-    public boolean delete(int id) throws DbException {
+    public boolean delete(Long id) throws DbException {
         try {
             Category category = dao.getById(id);
             if (category != null) {
@@ -63,7 +65,7 @@ public class CategoryService {
         }
     }
 
-    public Category getById(int id) throws DbException {
+    public Category getById(Long id) throws DbException {
         try {
             return dao.getById(id);
         } catch (Exception e) {

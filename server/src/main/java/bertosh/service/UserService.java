@@ -1,7 +1,9 @@
 package bertosh.service;
 
+import bertosh.dao.implementations.RoleDao;
 import bertosh.dao.implementations.UserDao;
 import bertosh.dbException.DbException;
+import bertosh.entities.Role;
 import bertosh.entities.User;
 import ch.qos.logback.classic.util.LogbackMDCAdapter;
 import org.apache.logging.log4j.LogManager;
@@ -18,10 +20,16 @@ public class UserService {
     @Autowired
     private UserDao dao;
 
+    @Autowired
+    private RoleDao roleDao;
+
     private final static Logger logger = LogManager.getLogger(UserService.class);
     
     public User create(User user) throws DbException {
         try {
+            for (Role role : user.getRoles()) {
+                roleDao.create(role);
+            }
             return dao.create(user);
         } catch (Exception e) {
             logger.error(e.getMessage());
@@ -29,16 +37,30 @@ public class UserService {
         }
     }
     
-    public User update(int id, User updateUser) throws DbException {
+    public User update(Long id, User updateUser) throws DbException {
         try {
             User user = dao.getById(id);
-            user.setCountry(updateUser.getCountry());
-            user.setDescription(updateUser.getDescription());
-            user.setEmail(updateUser.getEmail());
-            user.setFirstName(updateUser.getFirstName());
-            user.setLastName(updateUser.getLastName());
-            user.setPhoneNumber(updateUser.getPhoneNumber());
-            user.setRating(updateUser.getRating());
+            if (updateUser.getCountry() != null) {
+                user.setCountry(updateUser.getCountry());
+            }
+            if (updateUser.getDescription() != null) {
+                user.setDescription(updateUser.getDescription());
+            }
+            if (updateUser.getEmail() != null) {
+                user.setEmail(updateUser.getEmail());
+            }
+            if (updateUser.getFirstName() != null) {
+                user.setFirstName(updateUser.getFirstName());
+            }
+            if (updateUser.getLastName() != null) {
+                user.setLastName(updateUser.getLastName());
+            }
+            if (updateUser.getPhoneNumber() != null) {
+                user.setPhoneNumber(updateUser.getPhoneNumber());
+            }
+            if (updateUser.getRating() != 0) {
+                user.setRating(updateUser.getRating());
+            }
             return dao.update(user);
         } catch (Exception e) {
             logger.error(e.getMessage());
@@ -46,7 +68,7 @@ public class UserService {
         }
     }
     
-    public boolean delete(int id) throws DbException {
+    public boolean delete(Long id) throws DbException {
         try {
             User user = dao.getById(id);
             if (user != null) {
@@ -70,7 +92,7 @@ public class UserService {
         }
     }
     
-    public User getById(int id) throws DbException {
+    public User getById(Long id) throws DbException {
         try {
             return dao.getById(id);
         } catch (Exception e) {

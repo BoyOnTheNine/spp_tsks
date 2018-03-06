@@ -28,13 +28,21 @@ public class OfferService {
         }
     }
 
-    public Offer update(int id, Offer updateOffer) throws DbException {
+    public Offer update(Long id, Offer updateOffer) throws DbException {
         try {
             Offer offer = dao.getById(id);
-            offer.setName(updateOffer.getName());
-            offer.setCategory(updateOffer.getCategory());
-            offer.setDate(updateOffer.getDate());
-            offer.setDescription(updateOffer.getDescription());
+            if (updateOffer.getCategory() != null) {
+                offer.setCategory(updateOffer.getCategory());
+            }
+            if (updateOffer.getName() != null) {
+                offer.setName(updateOffer.getName());
+            }
+            if (updateOffer.getDate() != null) {
+                offer.setDate(updateOffer.getDate());
+            }
+            if (updateOffer.getDescription() != null) {
+                offer.setDescription(updateOffer.getDescription());
+            }
             return dao.update(offer);
         } catch (Exception e) {
             logger.error(e.getMessage());
@@ -42,7 +50,7 @@ public class OfferService {
         }
     }
 
-    public boolean delete(int id) throws DbException {
+    public boolean delete(Long id) throws DbException {
         try {
             Offer offer = dao.getById(id);
             if (offer != null) {
@@ -66,7 +74,7 @@ public class OfferService {
         }
     }
 
-    public Offer getById(int id) throws DbException {
+    public Offer getById(Long id) throws DbException {
         try {
             return dao.getById(id);
         } catch (Exception e) {

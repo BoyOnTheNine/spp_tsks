@@ -1,5 +1,6 @@
 server:
-  port: 8080
+  port: 8081
+  context-path: /hello
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/spp_tsks
