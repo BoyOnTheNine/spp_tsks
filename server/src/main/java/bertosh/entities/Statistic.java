@@ -15,10 +15,19 @@ public class Statistic {
     private Date beginDate;
     @Column
     private Date endDate;
+    /**
+     * Do it
+     */
     @OneToOne
     private UserOrder userOrder;
+    /**
+     * Do it
+     */
     @OneToOne
     private User user;
+    /**
+     * Do it
+     */
     @OneToOne
     private User customer;
 

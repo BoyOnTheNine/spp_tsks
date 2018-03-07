@@ -72,4 +72,16 @@ public class CategoryDao implements GenericDao<Category, Long> {
             throw new DbException("Exception while getting category with id = " + id);
         }
     }
+
+    public Category getByName(String name) throws DbException {
+        try {
+            return (Category)entityManager.createQuery("from Category c where c.name=:name")
+                    .setParameter("name", name)
+                    .getResultList()
+                    .get(0);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw new DbException("Exception while getting category with name = " + name);
+        }
+    }
 }

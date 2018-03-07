@@ -16,10 +16,16 @@ public class UserOrder {
     private Date date;
     @Column
     private double price;
-    @OneToOne
-    private User idWorker;
-    @OneToOne
-    private User idCustomer;
+    /**
+     * Do it
+     */
+    @OneToOne(cascade = CascadeType.ALL)
+    private User worker;
+    /**
+     * Do it
+     */
+    @OneToOne(cascade = CascadeType.ALL)
+    private User customer;
 
     public UserOrder() {
 
@@ -41,12 +47,12 @@ public class UserOrder {
         return date;
     }
 
-    public User getIdCustomer() {
-        return idCustomer;
+    public User getCustomer() {
+        return customer;
     }
 
-    public User getIdUser() {
-        return idWorker;
+    public User getWorker() {
+        return worker;
     }
 
     public void setDescription(String description) {
@@ -61,12 +67,12 @@ public class UserOrder {
         this.date = date;
     }
 
-    public void setIdCustomer(User idCustomer) {
-        this.idCustomer = idCustomer;
+    public void setCustomer(User customer) {
+        this.customer = customer;
     }
 
-    public void setIdUser(User idWorker) {
-        this.idWorker = idWorker;
+    public void setWorker(User worker) {
+        this.worker = worker;
     }
 
     @Override
@@ -76,15 +82,15 @@ public class UserOrder {
         sb.append(", description='").append(description).append('\'');
         sb.append(", date='").append(date).append('\'');
         sb.append(", price='").append(price).append('\'');
-        sb.append(", idCustomer='").append(idCustomer).append('\'');
-        sb.append(", idUser='").append(idWorker).append('\'');
+        sb.append(", customer='").append(customer).append('\'');
+        sb.append(", worker='").append(worker).append('\'');
         sb.append('}');
         return sb.toString();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, description, date, price, idCustomer, idWorker);
+        return Objects.hash(id, description, date, price, customer, worker);
     }
 
     @Override
@@ -96,7 +102,7 @@ public class UserOrder {
                 Objects.equals(description, userOrder.description) &&
                 Objects.equals(date, userOrder.date) &&
                 Objects.equals(price, userOrder.price) &&
-                Objects.equals(idCustomer, userOrder.idCustomer) &&
-                Objects.equals(idWorker, userOrder.idWorker);
+                Objects.equals(customer, userOrder.customer) &&
+                Objects.equals(worker, userOrder.worker);
     }
 }

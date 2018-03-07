@@ -2,7 +2,9 @@ package bertosh.entities;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Table(name = "offers")
@@ -16,8 +18,13 @@ public class Offer {
     private String description;
     @Column
     private Date date;
-    @OneToOne
-    private Category category;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "offer_category", joinColumns
+            = @JoinColumn(name = "offer_id",
+            referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id",
+                    referencedColumnName = "id"))
+    private List<Category> categories = new ArrayList<>();
 
     public Offer() {
 
@@ -51,12 +58,12 @@ public class Offer {
         return name;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
     }
 
-    public Category getCategory() {
-        return category;
+    public List<Category> getCategories() {
+        return categories;
     }
 
     @Override
@@ -70,12 +77,12 @@ public class Offer {
         if (name != null ? !name.equals(offer.name) : offer.name != null) return false;
         if (description != null ? !description.equals(offer.description) : offer.description != null) return false;
         if (date != null ? !date.equals(offer.date) : offer.date != null) return false;
-        return category != null ? category.equals(offer.category) : offer.category == null;
+        return categories != null ? categories.equals(offer.categories) : offer.categories == null;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, date, description, category);
+        return Objects.hash(id, name, date, description, categories);
     }
 
     @Override
@@ -85,7 +92,7 @@ public class Offer {
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", date=" + date +
-                ", category=" + category +
+                ", categories=" + categories +
                 '}';
     }
 }

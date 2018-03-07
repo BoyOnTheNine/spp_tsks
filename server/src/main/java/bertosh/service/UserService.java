@@ -72,6 +72,7 @@ public class UserService {
         try {
             User user = dao.getById(id);
             if (user != null) {
+                user.setRoles(null);
                 dao.delete(user);
                 return true;
             } else {

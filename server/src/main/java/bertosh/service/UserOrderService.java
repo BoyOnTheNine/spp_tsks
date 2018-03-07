@@ -37,11 +37,11 @@ public class UserOrderService {
             if (updateUserOrder.getDescription() != null) {
                 userOrder.setDescription(updateUserOrder.getDescription());
             }
-            if (updateUserOrder.getIdCustomer() != null) {
-                userOrder.setIdCustomer(updateUserOrder.getIdCustomer());
+            if (updateUserOrder.getCustomer() != null) {
+                userOrder.setCustomer(updateUserOrder.getCustomer());
             }
-            if (updateUserOrder.getIdUser() != null) {
-                userOrder.setIdUser(updateUserOrder.getIdUser());
+            if (updateUserOrder.getWorker() != null) {
+                userOrder.setWorker(updateUserOrder.getWorker());
             }
             if (updateUserOrder.getPrice() != 0) {
                 userOrder.setPrice(updateUserOrder.getPrice());

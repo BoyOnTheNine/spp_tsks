@@ -9,9 +9,9 @@ public class Role {
     @Id
     @GeneratedValue
     private long id;
-    @Column
+    @Column(unique = true)
     private String roleName;
-    @Column
+    @Column(unique = true)
     private String description;
 
     public Role() {
