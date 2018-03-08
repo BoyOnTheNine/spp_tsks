@@ -69,4 +69,16 @@ public class RoleDao implements GenericDao<Role, Long> {
             throw new DbException("Exception while getting role with id = " + id);
         }
     }
+
+    public Role getByName(String name) throws DbException {
+        try {
+            return (Role)entityManager.createQuery("from Role c where c.name=:name")
+                    .setParameter("name", name)
+                    .getResultList()
+                    .get(0);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw new DbException("Exception while getting category with name = " + name);
+        }
+    }
 }

@@ -10,7 +10,7 @@ public class Role {
     @GeneratedValue
     private long id;
     @Column(unique = true)
-    private String roleName;
+    private String name;
     @Column(unique = true)
     private String description;
 
@@ -26,12 +26,12 @@ public class Role {
         this.id = id;
     }
 
-    public String getRoleName() {
-        return roleName;
+    public String getName() {
+        return name;
     }
 
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {
@@ -50,20 +50,20 @@ public class Role {
         Role role = (Role) o;
 
         if (id != role.id) return false;
-        if (roleName != null ? !roleName.equals(role.roleName) : role.roleName != null) return false;
+        if (name != null ? !name.equals(role.name) : role.name != null) return false;
         return description != null ? description.equals(role.description) : role.description == null;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, roleName, description);
+        return Objects.hash(id, name, description);
     }
 
     @Override
     public String toString() {
         return "Role{" +
                 "id=" + id +
-                ", roleName='" + roleName + '\'' +
+                ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 '}';
     }

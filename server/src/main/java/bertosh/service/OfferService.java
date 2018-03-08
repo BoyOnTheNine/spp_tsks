@@ -42,7 +42,11 @@ public class OfferService {
         try {
             Offer offer = dao.getById(id);
             if (updateOffer.getCategories() != null) {
-                offer.setCategories(updateOffer.getCategories());
+                List<Category> list = updateOffer.getCategories();
+                offer.setCategories(new ArrayList<>());
+                for (Category category : list) {
+                    offer.getCategories().add(categoryDao.getByName(category.getName()));
+                }
             }
             if (updateOffer.getName() != null) {
                 offer.setName(updateOffer.getName());

@@ -1,8 +1,10 @@
 package bertosh.service;
 
 import bertosh.dao.implementations.RoleDao;
+import bertosh.dao.implementations.UserDao;
 import bertosh.dbException.DbException;
 import bertosh.entities.Role;
+import bertosh.entities.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,8 @@ public class RoleService {
 
     @Autowired
     private RoleDao dao;
+    @Autowired
+    private UserDao userDao;
 
     private final static Logger logger = LogManager.getLogger(RoleService.class);
 
@@ -32,8 +36,8 @@ public class RoleService {
     public Role update(Long id, Role updateRole) throws DbException {
         try {
             Role role = dao.getById(id);
-            if (updateRole.getRoleName() != null) {
-                role.setRoleName(updateRole.getRoleName());
+            if (updateRole.getName() != null) {
+                role.setName(updateRole.getName());
             }
             if (updateRole.getDescription() != null) {
                 role.setDescription(updateRole.getDescription());
@@ -49,6 +53,10 @@ public class RoleService {
         try {
             Role role = dao.getById(id);
             if (role != null) {
+                List<User> userList = userDao.getAll();
+                for (User user : userList) {
+                    user.getRoles().removeIf(role1 -> role1.getId() == id);
+                }
                 dao.delete(role);
                 return true;
             } else {
