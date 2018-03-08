@@ -1,8 +1,10 @@
 package bertosh.service;
 
 import bertosh.dao.implementations.CategoryDao;
+import bertosh.dao.implementations.OfferDao;
 import bertosh.dbException.DbException;
 import bertosh.entities.Category;
+import bertosh.entities.Offer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,8 @@ public class CategoryService {
 
     @Autowired
     private CategoryDao dao;
+    @Autowired
+    private OfferDao offerDao;
 
     private final static Logger logger = LogManager.getLogger(CategoryService.class);
 
@@ -45,6 +49,10 @@ public class CategoryService {
         try {
             Category category = dao.getById(id);
             if (category != null) {
+                List<Offer> offerList = offerDao.getAll();
+                for (Offer offer : offerList) {
+                    offer.getCategories().removeIf(category1 -> category1.getId() == id);
+                }
                 dao.delete(category);
                 return true;
             } else {
