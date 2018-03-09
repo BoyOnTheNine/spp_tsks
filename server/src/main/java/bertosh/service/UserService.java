@@ -5,7 +5,6 @@ import bertosh.dao.implementations.UserDao;
 import bertosh.dbException.DbException;
 import bertosh.entities.Role;
 import bertosh.entities.User;
-import ch.qos.logback.classic.util.LogbackMDCAdapter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +26,10 @@ public class UserService {
     
     public User create(User user) throws DbException {
         try {
-            for (Role role : user.getRoles()) {
-                roleDao.create(role);
+            List<Role> list = user.getRoles();
+            user.setRoles(new ArrayList<>());
+            for (Role role : list) {
+                user.getRoles().add(roleDao.getByName(role.getName()));
             }
             return dao.create(user);
         } catch (Exception e) {
@@ -60,6 +61,13 @@ public class UserService {
             }
             if (updateUser.getRating() != 0) {
                 user.setRating(updateUser.getRating());
+            }
+            if (updateUser.getRoles() != null) {
+                List<Role> list = updateUser.getRoles();
+                user.setRoles(new ArrayList<>());
+                for (Role role : list) {
+                    user.getRoles().add(roleDao.getByName(role.getName()));
+                }
             }
             return dao.update(user);
         } catch (Exception e) {

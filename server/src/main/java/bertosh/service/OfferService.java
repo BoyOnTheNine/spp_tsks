@@ -57,6 +57,9 @@ public class OfferService {
             if (updateOffer.getDescription() != null) {
                 offer.setDescription(updateOffer.getDescription());
             }
+            if (updateOffer.getPrice() != 0) {
+                offer.setPrice(updateOffer.getPrice());
+            }
             return dao.update(offer);
         } catch (Exception e) {
             logger.error(e.getMessage());

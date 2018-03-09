@@ -18,6 +18,8 @@ public class Offer {
     private String description;
     @Column
     private Date date;
+    @Column
+    private double price;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "offer_category", joinColumns
             = @JoinColumn(name = "offer_id",
@@ -66,6 +68,14 @@ public class Offer {
         return categories;
     }
 
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -74,6 +84,7 @@ public class Offer {
         Offer offer = (Offer) o;
 
         if (id != offer.id) return false;
+        if (Double.compare(offer.price, price) != 0) return false;
         if (name != null ? !name.equals(offer.name) : offer.name != null) return false;
         if (description != null ? !description.equals(offer.description) : offer.description != null) return false;
         if (date != null ? !date.equals(offer.date) : offer.date != null) return false;
@@ -82,7 +93,7 @@ public class Offer {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, date, description, categories);
+        return Objects.hash(id, name, date, description, categories, price);
     }
 
     @Override
@@ -92,6 +103,7 @@ public class Offer {
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", date=" + date +
+                ", price=" + price +
                 ", categories=" + categories +
                 '}';
     }
