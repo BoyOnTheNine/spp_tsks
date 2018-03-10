@@ -118,4 +118,13 @@ public class UserService {
             throw new DbException("Exception in getting user by email transaction");
         }
     }
+
+    public User getByLogin(String login) throws DbException {
+        try {
+            return dao.getByEmail(login);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw new DbException("Exception in getting user by login transaction");
+        }
+    }
 }

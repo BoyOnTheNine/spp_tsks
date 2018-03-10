@@ -75,7 +75,7 @@ public class UserDao implements GenericDao<User, Long> {
 
     public User getByEmail(String email) throws DbException {
         try {
-            //This is not optimized code, but i don't have time to fix this now)
+            //this code works correctly, because there are no 2 same email addresses
             return (User)entityManager.createQuery("from User c where c.email=:email")
                     .setParameter("email", email)
                     .getResultList()
@@ -83,6 +83,18 @@ public class UserDao implements GenericDao<User, Long> {
         } catch (Exception e) {
             logger.error(e.getMessage());
             throw new DbException("Exception while getting user with email = " + email);
+        }
+    }
+
+    public User getByLogin(String login) throws DbException {
+        try {
+            return (User)entityManager.createQuery("from User c where c.login=:login")
+                    .setParameter("login", login)
+                    .getResultList()
+                    .get(0);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw new DbException("Exception while getting user with login = " + login);
         }
     }
 }
