@@ -31,20 +31,14 @@ public class UserOrderService {
     public UserOrder update(Long id, UserOrder updateUserOrder) throws DbException {
         try {
             UserOrder userOrder = dao.getById(id);
-            if (updateUserOrder.getDate() != null) {
-                userOrder.setDate(updateUserOrder.getDate());
+            if (updateUserOrder.getCustomer() != null) {
+                userOrder.setCustomer(updateUserOrder.getCustomer());
             }
-            if (updateUserOrder.getDescription() != null) {
-                userOrder.setDescription(updateUserOrder.getDescription());
+            if (updateUserOrder.getWorkers() != null) {
+                userOrder.setWorkers(updateUserOrder.getWorkers());
             }
-            if (updateUserOrder.getIdCustomer() != null) {
-                userOrder.setIdCustomer(updateUserOrder.getIdCustomer());
-            }
-            if (updateUserOrder.getIdUser() != null) {
-                userOrder.setIdUser(updateUserOrder.getIdUser());
-            }
-            if (updateUserOrder.getPrice() != 0) {
-                userOrder.setPrice(updateUserOrder.getPrice());
+            if (updateUserOrder.getOffer() != null) {
+                userOrder.setOffer(updateUserOrder.getOffer());
             }
             return dao.update(userOrder);
         } catch (Exception e) {
@@ -57,6 +51,9 @@ public class UserOrderService {
         try {
             UserOrder userOrder = dao.getById(id);
             if (userOrder != null) {
+                userOrder.setCustomer(null);
+                userOrder.setWorkers(null);
+                userOrder.setOffer(null);
                 dao.delete(userOrder);
                 return true;
             } else {

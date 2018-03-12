@@ -72,6 +72,16 @@ public class UserController {
         }
     }
 
+    @GetMapping("/user/login/{login}")
+    public ResponseEntity getByLogin(@PathVariable String login) throws DbException {
+        User user = service.getByLogin(login);
+        if (user != null) {
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        } else {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+    }
+
     @ExceptionHandler(DbException.class)
     public ResponseEntity handleDbException(DbException e) {
         return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);

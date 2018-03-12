@@ -2,7 +2,6 @@ package bertosh.entities;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.Objects;
 
 @Entity
@@ -46,12 +45,12 @@ public class Statistic {
         return customer;
     }
 
-    public User getUsers() {
+    public User getUser() {
         return user;
     }
 
-    public void setUsers(User users) {
-        this.user = users;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public void setCustomer(User customer) {

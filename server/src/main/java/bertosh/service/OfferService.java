@@ -1,7 +1,9 @@
 package bertosh.service;
 
+import bertosh.dao.implementations.CategoryDao;
 import bertosh.dao.implementations.OfferDao;
 import bertosh.dbException.DbException;
+import bertosh.entities.Category;
 import bertosh.entities.Offer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,10 +19,18 @@ public class OfferService {
     @Autowired
     private OfferDao dao;
 
+    @Autowired
+    private CategoryDao categoryDao;
+
     private final static Logger logger = LogManager.getLogger(OfferService.class);
 
     public Offer create(Offer offer) throws DbException {
         try {
+            List<Category> list = offer.getCategories();
+            offer.setCategories(new ArrayList<>());
+            for (Category category : list) {
+                offer.getCategories().add(categoryDao.getByName(category.getName()));
+            }
             return dao.create(offer);
         } catch (Exception e) {
             logger.error(e.getMessage());
@@ -31,8 +41,12 @@ public class OfferService {
     public Offer update(Long id, Offer updateOffer) throws DbException {
         try {
             Offer offer = dao.getById(id);
-            if (updateOffer.getCategory() != null) {
-                offer.setCategory(updateOffer.getCategory());
+            if (updateOffer.getCategories() != null) {
+                List<Category> list = updateOffer.getCategories();
+                offer.setCategories(new ArrayList<>());
+                for (Category category : list) {
+                    offer.getCategories().add(categoryDao.getByName(category.getName()));
+                }
             }
             if (updateOffer.getName() != null) {
                 offer.setName(updateOffer.getName());
@@ -42,6 +56,9 @@ public class OfferService {
             }
             if (updateOffer.getDescription() != null) {
                 offer.setDescription(updateOffer.getDescription());
+            }
+            if (updateOffer.getPrice() != 0) {
+                offer.setPrice(updateOffer.getPrice());
             }
             return dao.update(offer);
         } catch (Exception e) {
@@ -54,6 +71,7 @@ public class OfferService {
         try {
             Offer offer = dao.getById(id);
             if (offer != null) {
+                offer.setCategories(null);
                 dao.delete(offer);
                 return true;
             } else {

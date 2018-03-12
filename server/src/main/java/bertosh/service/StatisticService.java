@@ -43,8 +43,8 @@ public class StatisticService {
             if (updateStatistic.getUserOrder() != null) {
                 statistic.setUserOrder(updateStatistic.getUserOrder());
             }
-            if (updateStatistic.getUsers() != null) {
-                statistic.setUsers(updateStatistic.getUsers());
+            if (updateStatistic.getUser() != null) {
+                statistic.setUser(updateStatistic.getUser());
             }
             return dao.update(statistic);
         } catch (Exception e) {
