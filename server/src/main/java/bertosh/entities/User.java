@@ -12,20 +12,25 @@ public class User {
     private long id;
     @Column(length = 30)
     private String firstName;
-    @Column(length = 30)
-    private String lastName;
     @Column(length = 50)
+    private String lastName;
+    @Column(length = 50, nullable = false)
     private String email;
-    @Column
+    @Column(unique = true, nullable = false)
     private String phoneNumber;
     @Column
     private String country;
-    @Column
+    @Column(unique = true, nullable = false)
     private String login;
     @Column
     private int hash;
-    @Column
-    private String description;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "user_skill", joinColumns
+            = @JoinColumn(name = "user_id",
+            referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "skill_id",
+                    referencedColumnName = "id"))
+    private List<Skill> skills;
     @Column
     private double rating;
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -42,6 +47,10 @@ public class User {
 
     public long getId() {
         return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public void setEmail(String email) {
@@ -100,14 +109,6 @@ public class User {
         return hash;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
     public double getRating() {
         return rating;
     }
@@ -124,6 +125,14 @@ public class User {
         this.roles = roles;
     }
 
+    public List<Skill> getSkills() {
+        return skills;
+    }
+
+    public void setSkills(List<Skill> skills) {
+        this.skills = skills;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
@@ -136,16 +145,16 @@ public class User {
                 Objects.equals(email, user.email) &&
                 Objects.equals(country, user.country) &&
                 Objects.equals(login, user.login) &&
-                Objects.equals(description, user.description) &&
                 Objects.equals(rating, user.rating) &&
                 Objects.equals(roles, user.roles) &&
+                Objects.equals(skills, user.skills) &&
                 Objects.equals(hash, user.hash);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id, firstName, lastName, phoneNumber,
-                email, country, login, hash, description, rating, roles);
+                email, country, login, hash, rating, roles, skills);
     }
 
     @Override
@@ -159,7 +168,7 @@ public class User {
                 ", country='" + country + '\'' +
                 ", login='" + login + '\'' +
                 ", hash=" + hash +
-                ", description='" + description + '\'' +
+                ", skills=" + skills +
                 ", rating=" + rating +
                 ", roles=" + roles +
                 '}';
