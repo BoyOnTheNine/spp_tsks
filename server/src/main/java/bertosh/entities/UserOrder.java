@@ -10,13 +10,10 @@ public class UserOrder {
     @Id
     @GeneratedValue
     private long id;
-    @OneToOne
-    private Offer offer;
-    @OneToMany(orphanRemoval = true)
-    @JoinColumn(name = "order_id")
-    private List<User> workers;
-    @OneToOne(cascade = CascadeType.ALL)
-    private User customer;
+    //@OneToOne
+    //private Offer offer;
+    @OneToMany
+    private List<User> workers = new ArrayList<>();
 
     public UserOrder() {
 
@@ -26,38 +23,34 @@ public class UserOrder {
         return id;
     }
 
-    public User getCustomer() {
-        return customer;
-    }
-
     public List<User> getWorkers() {
         return workers;
-    }
-
-    public void setCustomer(User customer) {
-        this.customer = customer;
     }
 
     public void setWorkers(List<User> workers) {
         this.workers = workers;
     }
 
-    public Offer getOffer() {
-        return offer;
-    }
-
-    public void setOffer(Offer offer) {
+    /*public void setOffer(Offer offer) {
         this.offer = offer;
     }
+
+    public Offer getOffer() {
+        return offer;
+    }*/
 
     @Override
     public String toString() {
         return "UserOrder{" +
                 "id=" + id +
-                ", offer=" + offer +
+                //", offer=" + offer +
                 ", workers=" + workers +
-                ", customer=" + customer +
                 '}';
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, workers/*, offer*/);
     }
 
     @Override
@@ -68,13 +61,6 @@ public class UserOrder {
         UserOrder userOrder = (UserOrder) o;
 
         if (id != userOrder.id) return false;
-        if (offer != null ? !offer.equals(userOrder.offer) : userOrder.offer != null) return false;
-        if (workers != null ? !workers.equals(userOrder.workers) : userOrder.workers != null) return false;
-        return customer != null ? customer.equals(userOrder.customer) : userOrder.customer == null;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, offer, workers, customer);
+        return workers != null ? workers.equals(userOrder.workers) : userOrder.workers == null;
     }
 }
