@@ -1,7 +1,10 @@
 package bertosh.service;
 
+import bertosh.dao.implementations.OfferDao;
+import bertosh.dao.implementations.UserDao;
 import bertosh.dao.implementations.UserOrderDao;
 import bertosh.dbException.DbException;
+import bertosh.entities.User;
 import bertosh.entities.UserOrder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,11 +19,21 @@ public class UserOrderService {
 
     @Autowired
     private UserOrderDao dao;
+    @Autowired
+    private UserDao userDao;
+    @Autowired
+    private OfferDao offerDao;
 
     private final static Logger logger = LogManager.getLogger(UserOrderService.class);
 
     public UserOrder create(UserOrder userOrder) throws DbException {
         try {
+            Set<User> set = userOrder.getWorkers();
+            userOrder.setWorkers(new HashSet<>());
+            for (User user : set) {
+                userOrder.getWorkers().add(userDao.getByLogin(user.getLogin()));
+            }
+            userOrder.setOffer(offerDao.getById(userOrder.getOffer().getId()));
             return dao.create(userOrder);
         } catch (Exception e) {
             logger.error(e.getMessage());
@@ -31,14 +44,15 @@ public class UserOrderService {
     public UserOrder update(Long id, UserOrder updateUserOrder) throws DbException {
         try {
             UserOrder userOrder = dao.getById(id);
-            if (updateUserOrder.getCustomer() != null) {
-                userOrder.setCustomer(updateUserOrder.getCustomer());
-            }
             if (updateUserOrder.getWorkers() != null) {
-                userOrder.setWorkers(updateUserOrder.getWorkers());
+                Set<User> set = updateUserOrder.getWorkers();
+                userOrder.setWorkers(new HashSet<>());
+                for (User user : set) {
+                    userOrder.getWorkers().add(userDao.getByLogin(user.getLogin()));
+                }
             }
             if (updateUserOrder.getOffer() != null) {
-                userOrder.setOffer(updateUserOrder.getOffer());
+                userOrder.setOffer(offerDao.getById(updateUserOrder.getOffer().getId()));
             }
             return dao.update(userOrder);
         } catch (Exception e) {
@@ -51,7 +65,6 @@ public class UserOrderService {
         try {
             UserOrder userOrder = dao.getById(id);
             if (userOrder != null) {
-                userOrder.setCustomer(null);
                 userOrder.setWorkers(null);
                 userOrder.setOffer(null);
                 dao.delete(userOrder);

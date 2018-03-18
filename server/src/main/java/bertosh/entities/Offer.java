@@ -27,6 +27,9 @@ public class Offer {
             inverseJoinColumns = @JoinColumn(name = "category_id",
                     referencedColumnName = "id"))
     private List<Category> categories = new ArrayList<>();
+    @OneToOne
+    private User customer;
+
 
     public Offer() {
 
@@ -76,6 +79,14 @@ public class Offer {
         this.price = price;
     }
 
+    public void setCustomer(User customer) {
+        this.customer = customer;
+    }
+
+    public User getCustomer() {
+        return customer;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -88,12 +99,13 @@ public class Offer {
         if (name != null ? !name.equals(offer.name) : offer.name != null) return false;
         if (description != null ? !description.equals(offer.description) : offer.description != null) return false;
         if (date != null ? !date.equals(offer.date) : offer.date != null) return false;
-        return categories != null ? categories.equals(offer.categories) : offer.categories == null;
+        if (categories != null ? !categories.equals(offer.categories) : offer.categories != null) return false;
+        return customer != null ? customer.equals(offer.customer) : offer.customer == null;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, date, description, categories, price);
+        return Objects.hash(id, name, date, description, categories, price, customer);
     }
 
     @Override
@@ -105,6 +117,7 @@ public class Offer {
                 ", date=" + date +
                 ", price=" + price +
                 ", categories=" + categories +
+                ", customer=" + customer +
                 '}';
     }
 }

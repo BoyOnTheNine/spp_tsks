@@ -20,6 +20,8 @@ public class User {
     private String phoneNumber;
     @Column
     private String country;
+    @Column
+    private double rating;
     @Column(unique = true, nullable = false)
     private String login;
     @Column
@@ -30,16 +32,14 @@ public class User {
             referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "skill_id",
                     referencedColumnName = "id"))
-    private List<Skill> skills;
-    @Column
-    private double rating;
+    private Set<Skill> skills;
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "user_role", joinColumns
             = @JoinColumn(name = "user_id",
             referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id",
                     referencedColumnName = "id"))
-    private List<Role> roles;
+    private Set<Role> roles;
 
     public User() {
 
@@ -117,19 +117,19 @@ public class User {
         this.rating = rating;
     }
 
-    public List<Role> getRoles() {
+    public Set<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(List<Role> roles) {
+    public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
 
-    public List<Skill> getSkills() {
+    public Set<Skill> getSkills() {
         return skills;
     }
 
-    public void setSkills(List<Skill> skills) {
+    public void setSkills(Set<Skill> skills) {
         this.skills = skills;
     }
 

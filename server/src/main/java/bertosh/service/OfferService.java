@@ -2,6 +2,7 @@ package bertosh.service;
 
 import bertosh.dao.implementations.CategoryDao;
 import bertosh.dao.implementations.OfferDao;
+import bertosh.dao.implementations.UserDao;
 import bertosh.dbException.DbException;
 import bertosh.entities.Category;
 import bertosh.entities.Offer;
@@ -22,6 +23,9 @@ public class OfferService {
     @Autowired
     private CategoryDao categoryDao;
 
+    @Autowired
+    private UserDao userDao;
+
     private final static Logger logger = LogManager.getLogger(OfferService.class);
 
     public Offer create(Offer offer) throws DbException {
@@ -31,6 +35,7 @@ public class OfferService {
             for (Category category : list) {
                 offer.getCategories().add(categoryDao.getByName(category.getName()));
             }
+            offer.setCustomer(userDao.getByLogin(offer.getCustomer().getLogin()));
             return dao.create(offer);
         } catch (Exception e) {
             logger.error(e.getMessage());
@@ -72,6 +77,7 @@ public class OfferService {
             Offer offer = dao.getById(id);
             if (offer != null) {
                 offer.setCategories(null);
+                offer.setCustomer(null);
                 dao.delete(offer);
                 return true;
             } else {

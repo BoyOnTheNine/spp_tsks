@@ -55,6 +55,7 @@ public class SkillService {
                for (User user : list) {
                    user.getSkills().removeIf(deletingSkill -> deletingSkill.getId() == id);
                }
+               dao.delete(skill);
                return true;
             } else {
                 return false;

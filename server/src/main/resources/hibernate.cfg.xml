@@ -18,7 +18,6 @@
     <mapping class="bertosh.entities.Statistic"/>
     <mapping class="bertosh.entities.User"/>
     <mapping class="bertosh.entities.UserOrder"/>
-    <mapping class="bertosh.entities.Customer"/>
     <mapping class="bertosh.entities.Role"/>
     <mapping class="bertosh.entities.Skill"/>
   </session-factory>
