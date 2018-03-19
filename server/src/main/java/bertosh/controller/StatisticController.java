@@ -1,6 +1,7 @@
 package bertosh.controller;
 
 import bertosh.dbException.DbException;
+import bertosh.dbException.EntityNotFoundException;
 import bertosh.entities.Statistic;
 import bertosh.service.StatisticService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,7 @@ public class StatisticController {
         if (statistic != null) {
             return new ResponseEntity<>(statistic, HttpStatus.OK);
         } else {
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+            throw new EntityNotFoundException("Unable to find statistic with id = " + id);
         }
     }
 
@@ -43,7 +44,7 @@ public class StatisticController {
         if (statistic != null) {
             return new ResponseEntity<>(statistic, HttpStatus.OK);
         } else {
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+            throw new EntityNotFoundException("Unable to find statistic with id = " + id);
         }
     }
 
@@ -58,12 +59,7 @@ public class StatisticController {
         if (service.delete(id)) {
             return new ResponseEntity(HttpStatus.OK);
         } else {
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+            throw new EntityNotFoundException("Unable to find statistic with id = " + id);
         }
-    }
-
-    @ExceptionHandler(DbException.class)
-    public ResponseEntity handleDbException(DbException e) {
-        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

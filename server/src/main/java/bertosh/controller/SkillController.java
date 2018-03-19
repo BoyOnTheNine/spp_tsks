@@ -1,6 +1,7 @@
 package bertosh.controller;
 
 import bertosh.dbException.DbException;
+import bertosh.dbException.EntityNotFoundException;
 import bertosh.entities.Skill;
 import bertosh.service.SkillService;
 import org.apache.logging.log4j.LogManager;
@@ -37,7 +38,7 @@ public class SkillController {
         if (skill != null) {
             return new ResponseEntity<>(skill, HttpStatus.OK);
         } else {
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+            throw new EntityNotFoundException("Unable to find skill with id = " + id);
         }
     }
 
@@ -48,7 +49,7 @@ public class SkillController {
             logger.info("Updated skill with id = " + id);
             return new ResponseEntity<>(skill, HttpStatus.OK);
         } else {
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+            throw new EntityNotFoundException("Unable to find skill with id = " + id);
         }
     }
 
@@ -65,7 +66,7 @@ public class SkillController {
             logger.info("Deleted skill with id = " + id);
             return new ResponseEntity(HttpStatus.OK);
         } else {
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+            throw new EntityNotFoundException("Unable to find skill with id = " + id);
         }
     }
 }

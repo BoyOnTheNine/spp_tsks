@@ -1,6 +1,7 @@
 package bertosh.controller;
 
 import bertosh.dbException.DbException;
+import bertosh.dbException.EntityNotFoundException;
 import bertosh.entities.UserOrder;
 import bertosh.service.UserOrderService;
 import org.apache.logging.log4j.LogManager;
@@ -37,7 +38,7 @@ public class UserOrderController {
         if (userOrder != null) {
             return new ResponseEntity<>(userOrder, HttpStatus.OK);
         } else {
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+            throw new EntityNotFoundException("Unable to find order with id = " + id);
         }
     }
 
@@ -48,7 +49,7 @@ public class UserOrderController {
             logger.info("Updated order with id = " + id);
             return new ResponseEntity<>(userOrder, HttpStatus.OK);
         } else {
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+            throw new EntityNotFoundException("Unable to find order with id = " + id);
         }
     }
 
@@ -65,12 +66,7 @@ public class UserOrderController {
             logger.info("Deleted order with id = " + id);
             return new ResponseEntity(HttpStatus.OK);
         } else {
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+            throw new EntityNotFoundException("Unable to find order with id = " + id);
         }
-    }
-
-    @ExceptionHandler(DbException.class)
-    public ResponseEntity handleDbException(DbException e) {
-        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
