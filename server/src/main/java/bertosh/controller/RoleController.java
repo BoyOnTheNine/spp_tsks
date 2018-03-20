@@ -1,7 +1,7 @@
 package bertosh.controller;
 
-import bertosh.dbException.DbException;
-import bertosh.dbException.EntityNotFoundException;
+import bertosh.exceptions.DbException;
+import bertosh.exceptions.EntityNotFoundException;
 import bertosh.entities.Role;
 import bertosh.service.RoleService;
 import org.apache.logging.log4j.LogManager;

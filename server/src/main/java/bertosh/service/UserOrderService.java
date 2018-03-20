@@ -3,7 +3,7 @@ package bertosh.service;
 import bertosh.dao.implementations.OfferDao;
 import bertosh.dao.implementations.UserDao;
 import bertosh.dao.implementations.UserOrderDao;
-import bertosh.dbException.DbException;
+import bertosh.exceptions.DbException;
 import bertosh.entities.User;
 import bertosh.entities.UserOrder;
 import org.apache.logging.log4j.LogManager;

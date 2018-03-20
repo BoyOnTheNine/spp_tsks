@@ -1,7 +1,7 @@
 package bertosh.controller;
 
-import bertosh.dbException.DbException;
-import bertosh.dbException.EntityNotFoundException;
+import bertosh.exceptions.DbException;
+import bertosh.exceptions.EntityNotFoundException;
 import bertosh.entities.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

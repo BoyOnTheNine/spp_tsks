@@ -3,7 +3,7 @@ package bertosh.service;
 import bertosh.dao.implementations.RoleDao;
 import bertosh.dao.implementations.SkillDao;
 import bertosh.dao.implementations.UserDao;
-import bertosh.dbException.DbException;
+import bertosh.exceptions.DbException;
 import bertosh.entities.Role;
 import bertosh.entities.Skill;
 import bertosh.entities.User;

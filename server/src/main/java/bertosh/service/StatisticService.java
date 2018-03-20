@@ -1,7 +1,7 @@
 package bertosh.service;
 
 import bertosh.dao.implementations.StatisticDao;
-import bertosh.dbException.DbException;
+import bertosh.exceptions.DbException;
 import bertosh.entities.Statistic;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

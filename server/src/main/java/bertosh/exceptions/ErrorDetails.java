@@ -1,4 +1,4 @@
-package bertosh.dbException;
+package bertosh.exceptions;
 
 import java.util.Date;
 

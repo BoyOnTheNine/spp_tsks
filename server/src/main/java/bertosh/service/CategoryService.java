@@ -2,7 +2,7 @@ package bertosh.service;
 
 import bertosh.dao.implementations.CategoryDao;
 import bertosh.dao.implementations.OfferDao;
-import bertosh.dbException.DbException;
+import bertosh.exceptions.DbException;
 import bertosh.entities.Category;
 import bertosh.entities.Offer;
 import org.apache.logging.log4j.LogManager;

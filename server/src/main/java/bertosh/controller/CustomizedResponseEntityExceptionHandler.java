@@ -1,8 +1,8 @@
 package bertosh.controller;
 
-import bertosh.dbException.DbException;
-import bertosh.dbException.EntityNotFoundException;
-import bertosh.dbException.ErrorDetails;
+import bertosh.exceptions.DbException;
+import bertosh.exceptions.EntityNotFoundException;
+import bertosh.exceptions.ErrorDetails;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
