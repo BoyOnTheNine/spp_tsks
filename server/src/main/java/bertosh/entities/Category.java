@@ -1,7 +1,5 @@
 package bertosh.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -11,7 +9,7 @@ public class Category {
     @Id
     @GeneratedValue
     private long id;
-    @Column(length = 25)
+    @Column(length = 25, unique = true, nullable = false)
     private String name;
 
     public Category() {

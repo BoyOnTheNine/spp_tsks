@@ -1,6 +1,8 @@
 server:
   port: 8081
-  context-path: /hello
+  error:
+    whitelabel:
+    include-stacktrace: always
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/spp_tsks

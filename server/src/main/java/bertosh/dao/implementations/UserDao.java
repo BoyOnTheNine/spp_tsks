@@ -1,7 +1,7 @@
 package bertosh.dao.implementations;
 
 import bertosh.dao.GenericDao;
-import bertosh.dbException.DbException;
+import bertosh.exceptions.DbException;
 import bertosh.entities.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -75,7 +75,7 @@ public class UserDao implements GenericDao<User, Long> {
 
     public User getByEmail(String email) throws DbException {
         try {
-            //this code works correctly, because there are no 2 same email addresses
+            //This code works correctly, because there are no 2 same email addresses
             return (User)entityManager.createQuery("from User c where c.email=:email")
                     .setParameter("email", email)
                     .getResultList()
@@ -88,6 +88,7 @@ public class UserDao implements GenericDao<User, Long> {
 
     public User getByLogin(String login) throws DbException {
         try {
+            //This code works correctly, because there are no 2 same logins in our system
             return (User)entityManager.createQuery("from User c where c.login=:login")
                     .setParameter("login", login)
                     .getResultList()

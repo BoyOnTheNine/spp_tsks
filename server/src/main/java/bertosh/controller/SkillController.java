@@ -1,8 +1,11 @@
 package bertosh.controller;
 
-import bertosh.dbException.DbException;
+import bertosh.exceptions.DbException;
+import bertosh.exceptions.EntityNotFoundException;
 import bertosh.entities.Skill;
 import bertosh.service.SkillService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +19,8 @@ public class SkillController {
 
     @Autowired
     private SkillService service;
+
+    private final static Logger logger = LogManager.getLogger(SkillController.class);
 
     @GetMapping("/skills")
     public ResponseEntity getAll() throws DbException {
@@ -33,7 +38,7 @@ public class SkillController {
         if (skill != null) {
             return new ResponseEntity<>(skill, HttpStatus.OK);
         } else {
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+            throw new EntityNotFoundException("Unable to find skill with id = " + id);
         }
     }
 
@@ -41,24 +46,27 @@ public class SkillController {
     public ResponseEntity update(@PathVariable Long id, @RequestBody Skill skill) throws DbException {
         skill = service.update(id, skill);
         if (skill != null) {
+            logger.info("Updated skill with id = " + id);
             return new ResponseEntity<>(skill, HttpStatus.OK);
         } else {
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+            throw new EntityNotFoundException("Unable to find skill with id = " + id);
         }
     }
 
     @PostMapping("/skills")
     public ResponseEntity<Skill> create(@RequestBody Skill skill) throws DbException {
         skill = service.create(skill);
+        logger.info("Created new skill with id = " + skill.getId());
         return new ResponseEntity<>(skill, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/skills/{id}")
     public ResponseEntity delete(@PathVariable Long id) throws DbException {
         if (service.delete(id)) {
+            logger.info("Deleted skill with id = " + id);
             return new ResponseEntity(HttpStatus.OK);
         } else {
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+            throw new EntityNotFoundException("Unable to find skill with id = " + id);
         }
     }
 }

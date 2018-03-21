@@ -10,10 +10,15 @@ public class UserOrder {
     @Id
     @GeneratedValue
     private long id;
-    //@OneToOne
-    //private Offer offer;
-    @OneToMany
-    private List<User> workers = new ArrayList<>();
+    @OneToOne
+    private Offer offer;
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "order_workers", joinColumns
+            = @JoinColumn(name = "order_id",
+            referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "worker_id",
+                    referencedColumnName = "id"))
+    private Set<User> workers;
 
     public UserOrder() {
 
@@ -23,34 +28,34 @@ public class UserOrder {
         return id;
     }
 
-    public List<User> getWorkers() {
+    public Set<User> getWorkers() {
         return workers;
     }
 
-    public void setWorkers(List<User> workers) {
+    public void setWorkers(Set<User> workers) {
         this.workers = workers;
     }
 
-    /*public void setOffer(Offer offer) {
+    public void setOffer(Offer offer) {
         this.offer = offer;
     }
 
     public Offer getOffer() {
         return offer;
-    }*/
+    }
 
     @Override
     public String toString() {
         return "UserOrder{" +
                 "id=" + id +
-                //", offer=" + offer +
+                ", offer=" + offer +
                 ", workers=" + workers +
                 '}';
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, workers/*, offer*/);
+        return Objects.hash(id, workers, offer);
     }
 
     @Override
@@ -61,6 +66,7 @@ public class UserOrder {
         UserOrder userOrder = (UserOrder) o;
 
         if (id != userOrder.id) return false;
+        if (offer != null ? !offer.equals(userOrder.offer) : userOrder.offer != null) return false;
         return workers != null ? workers.equals(userOrder.workers) : userOrder.workers == null;
     }
 }

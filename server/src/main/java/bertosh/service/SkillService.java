@@ -2,7 +2,7 @@ package bertosh.service;
 
 import bertosh.dao.implementations.SkillDao;
 import bertosh.dao.implementations.UserDao;
-import bertosh.dbException.DbException;
+import bertosh.exceptions.DbException;
 import bertosh.entities.Skill;
 import bertosh.entities.User;
 import org.apache.logging.log4j.LogManager;
@@ -55,6 +55,7 @@ public class SkillService {
                for (User user : list) {
                    user.getSkills().removeIf(deletingSkill -> deletingSkill.getId() == id);
                }
+               dao.delete(skill);
                return true;
             } else {
                 return false;
