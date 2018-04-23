@@ -1,6 +1,7 @@
 package bertosh.dao.implementations;
 
 import bertosh.dao.GenericDao;
+import bertosh.entities.RoleName;
 import bertosh.exceptions.DbException;
 import bertosh.entities.Role;
 import org.apache.logging.log4j.LogManager;
@@ -70,12 +71,13 @@ public class RoleDao implements GenericDao<Role, Long> {
         }
     }
 
-    public Role getByName(String name) throws DbException {
+    public RoleName getByName(String name) throws DbException {
         try {
-            return (Role)entityManager.createQuery("from Role c where c.name=:name")
+            Role role = (Role)entityManager.createQuery("from Role c where c.name=:name")
                     .setParameter("name", name)
                     .getResultList()
                     .get(0);
+            return role.getName();
         } catch (Exception e) {
             logger.error(e.getMessage());
             throw new DbException("Exception while getting category with name = " + name);

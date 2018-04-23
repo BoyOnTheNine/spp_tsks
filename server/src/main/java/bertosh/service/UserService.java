@@ -31,13 +31,13 @@ public class UserService {
     
     public User create(User user) throws DbException {
         try {
-            Set<Role> list = user.getRoles();
+            /*Set<Role> list = user.getRoles();
             if (list != null) {
                 user.setRoles(new HashSet<>());
                 for (Role role : list) {
                     user.getRoles().add(roleDao.getByName(role.getName()));
                 }
-            }
+            }*/
             Set<Skill> skillList = user.getSkills();
             if (skillList != null) {
                 user.setSkills(new HashSet<>());
@@ -73,13 +73,13 @@ public class UserService {
             if (updateUser.getRating() != 0) {
                 user.setRating(updateUser.getRating());
             }
-            if (updateUser.getRoles() != null) {
+            /*if (updateUser.getRoles() != null) {
                 Set<Role> list = updateUser.getRoles();
                 user.setRoles(new HashSet<>());
                 for (Role role : list) {
                     user.getRoles().add(roleDao.getByName(role.getName()));
                 }
-            }
+            }*/
             if (updateUser.getSkills() != null) {
                 Set<Skill> list = updateUser.getSkills();
                 user.setSkills(new HashSet<>());

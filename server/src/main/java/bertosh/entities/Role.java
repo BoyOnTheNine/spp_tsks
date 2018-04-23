@@ -1,5 +1,7 @@
 package bertosh.entities;
 
+import org.hibernate.annotations.NaturalId;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -9,10 +11,10 @@ public class Role {
     @Id
     @GeneratedValue
     private long id;
+    @Enumerated(EnumType.STRING)
+    @NaturalId
     @Column(unique = true, nullable = false)
-    private String name;
-    @Column(unique = true, nullable = false)
-    private String description;
+    private RoleName name;
 
     public Role() {
 
@@ -26,20 +28,12 @@ public class Role {
         this.id = id;
     }
 
-    public String getName() {
+    public RoleName getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(RoleName name) {
         this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     @Override
@@ -50,13 +44,12 @@ public class Role {
         Role role = (Role) o;
 
         if (id != role.id) return false;
-        if (name != null ? !name.equals(role.name) : role.name != null) return false;
-        return description != null ? description.equals(role.description) : role.description == null;
+        return name == role.name;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, description);
+        return Objects.hash(id, name);
     }
 
     @Override
@@ -64,7 +57,6 @@ public class Role {
         return "Role{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
                 '}';
     }
 }
