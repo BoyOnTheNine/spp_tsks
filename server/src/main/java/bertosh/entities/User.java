@@ -16,7 +16,7 @@ public class User {
     private String lastName;
     @Column(length = 50, nullable = false)
     private String email;
-    @Column(unique = true, nullable = false)
+    @Column(unique = true)
     private String phoneNumber;
     @Column
     private String country;
@@ -25,7 +25,7 @@ public class User {
     @Column(unique = true, nullable = false)
     private String login;
     @Column
-    private int hash;
+    private String password;
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "user_skill", joinColumns
             = @JoinColumn(name = "user_id",
@@ -43,6 +43,14 @@ public class User {
 
     public User() {
 
+    }
+
+    public User(String firstName, String lastName ,String login, String email, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.login = login;
+        this.email = email;
+        this.password = password;
     }
 
     public long getId() {
@@ -73,8 +81,8 @@ public class User {
         this.country = country;
     }
 
-    public void setHash(int hash) {
-        this.hash = hash;
+    public void setPassword(String hash) {
+        this.password = hash;
     }
 
     public void setLogin(String login) {
@@ -105,8 +113,8 @@ public class User {
         return login;
     }
 
-    public int getHash() {
-        return hash;
+    public String getPassword() {
+        return password;
     }
 
     public double getRating() {
@@ -148,13 +156,13 @@ public class User {
                 Objects.equals(rating, user.rating) &&
                 Objects.equals(roles, user.roles) &&
                 Objects.equals(skills, user.skills) &&
-                Objects.equals(hash, user.hash);
+                Objects.equals(password, user.password);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id, firstName, lastName, phoneNumber,
-                email, country, login, hash, rating, roles, skills);
+                email, country, login, password, rating, roles, skills);
     }
 
     @Override
@@ -167,7 +175,7 @@ public class User {
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", country='" + country + '\'' +
                 ", login='" + login + '\'' +
-                ", hash=" + hash +
+                ", hash=" + password +
                 ", skills=" + skills +
                 ", rating=" + rating +
                 ", roles=" + roles +

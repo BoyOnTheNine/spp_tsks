@@ -39,9 +39,6 @@ public class RoleService {
             if (updateRole.getName() != null) {
                 role.setName(updateRole.getName());
             }
-            if (updateRole.getDescription() != null) {
-                role.setDescription(updateRole.getDescription());
-            }
             return dao.update(role);
         } catch (Exception e) {
             logger.error(e.getMessage());
