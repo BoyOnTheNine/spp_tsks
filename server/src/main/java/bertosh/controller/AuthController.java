@@ -1,6 +1,7 @@
 package bertosh.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -10,7 +11,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import bertosh.entities.Role;
@@ -30,30 +30,29 @@ import java.net.URI;
 import java.util.Collections;
 
 @RestController
-@RequestMapping("/api/auth")
 public class AuthController {
 
     @Autowired
-    AuthenticationManager authenticationManager;
+    private AuthenticationManager authenticationManager;
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    RoleRepository roleRepository;
+    private RoleRepository roleRepository;
 
     @Autowired
-    PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
-    JwtTokenProvider tokenProvider;
+    private JwtTokenProvider tokenProvider;
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        loginRequest.getUsernameOrEmail(),
+                        loginRequest.getLoginOrEmail(),
                         loginRequest.getPassword()
                 )
         );
@@ -61,7 +60,9 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String jwt = tokenProvider.generateToken(authentication);
-        return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Access-Control-Allow-Origin", "*");
+        return new ResponseEntity<>(new JwtAuthenticationResponse(jwt), headers, HttpStatus.OK);
     }
 
     @PostMapping("/signup")
@@ -92,7 +93,9 @@ public class AuthController {
         URI location = ServletUriComponentsBuilder
                 .fromCurrentContextPath().path("/users/{username}")
                 .buildAndExpand(result.getLogin()).toUri();
-
-        return ResponseEntity.created(location).body(new ApiResponse(true, "User registered successfully"));
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Access-Control-Allow-Origin", "*");
+        return ResponseEntity.created(location).headers(headers).body(
+                new ApiResponse(true, "User registered successfully"));
     }
 }

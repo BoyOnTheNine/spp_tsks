@@ -16,7 +16,7 @@ public class User {
     private String lastName;
     @Column(length = 50, nullable = false)
     private String email;
-    @Column(unique = true)
+    @Column
     private String phoneNumber;
     @Column
     private String country;
