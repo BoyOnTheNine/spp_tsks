@@ -18,6 +18,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import bertosh.security.CustomUserDetailsService;
 import bertosh.security.JwtAuthenticationEntryPoint;
 import bertosh.security.JwtAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -29,7 +32,7 @@ import bertosh.security.JwtAuthenticationFilter;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    CustomUserDetailsService customUserDetailsService;
+    private CustomUserDetailsService customUserDetailsService;
 
     @Autowired
     private JwtAuthenticationEntryPoint unauthorizedHandler;
@@ -81,11 +84,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.css",
                         "/**/*.js")
                 .permitAll()
-                .antMatchers("/api/auth/**")
-                .permitAll()
-                .antMatchers("/api/user/checkUsernameAvailability", "/api/user/checkEmailAvailability")
-                .permitAll()
-                .antMatchers(HttpMethod.GET, "/api/polls/**", "/api/users/**")
+                .antMatchers("/signup", "/signin")
                 .permitAll()
                 .anyRequest()
                 .authenticated();
@@ -93,5 +92,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // Add our custom JWT security filter
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
+    }
+
+    @Bean
+    public CorsFilter corsFilter() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowCredentials(true);
+        config.addAllowedOrigin("*");
+        config.addAllowedHeader("*");
+        config.addAllowedMethod("OPTIONS");
+        config.addAllowedMethod("GET");
+        config.addAllowedMethod("POST");
+        config.addAllowedMethod("PUT");
+        config.addAllowedMethod("DELETE");
+        source.registerCorsConfiguration("/**", config);
+        return new CorsFilter(source);
     }
 }

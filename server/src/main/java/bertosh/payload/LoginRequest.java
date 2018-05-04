@@ -1,21 +1,16 @@
 package bertosh.payload;
 
-import org.hibernate.validator.constraints.NotBlank;
-
 public class LoginRequest {
 
-    @NotBlank
-    private String usernameOrEmail;
-
-    @NotBlank
+    private String loginOrEmail;
     private String password;
 
-    public String getUsernameOrEmail() {
-        return usernameOrEmail;
+    public String getLoginOrEmail() {
+        return loginOrEmail;
     }
 
-    public void setUsernameOrEmail(String usernameOrEmail) {
-        this.usernameOrEmail = usernameOrEmail;
+    public void setLoginOrEmail(String loginOrEmail) {
+        this.loginOrEmail = loginOrEmail;
     }
 
     public String getPassword() {
