@@ -24,9 +24,6 @@ public class SSLEmailSender {
     }
 
     public SSLEmailSender(String username, String password) {
-        //this.username = username;
-        //this.password = password;
-
         props = new Properties();
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.socketFactory.port", "465");
