@@ -1,7 +1,6 @@
 package bertosh.controller;
 
 import bertosh.exceptions.AppException;
-import bertosh.mail.SSLEmailSender;
 import bertosh.payload.EmailRequest;
 import bertosh.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
