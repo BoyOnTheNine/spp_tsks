@@ -61,7 +61,7 @@ public class AuthController {
 
         String jwt = tokenProvider.generateToken(authentication);
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Access-Control-Allow-Origin", "*");
+        //headers.add("Access-Control-Allow-Origin", "*");
         return new ResponseEntity<>(new JwtAuthenticationResponse(jwt), headers, HttpStatus.OK);
     }
 
@@ -94,7 +94,7 @@ public class AuthController {
                 .fromCurrentContextPath().path("/users/{username}")
                 .buildAndExpand(result.getLogin()).toUri();
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Access-Control-Allow-Origin", "*");
+        //headers.add("Access-Control-Allow-Origin", "*");
         return ResponseEntity.created(location).headers(headers).body(
                 new ApiResponse(true, "User registered successfully"));
     }
