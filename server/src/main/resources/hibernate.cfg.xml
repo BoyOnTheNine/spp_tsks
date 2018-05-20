@@ -13,12 +13,12 @@
     <property name="connection.password">1234</property>
     <property name="hbm2ddl.auto">create-drop</property>
 
-    <mapping class="bertosh.entities.Category"/>
-    <mapping class="bertosh.entities.Offer"/>
-    <mapping class="bertosh.entities.Statistic"/>
-    <mapping class="bertosh.entities.User"/>
-    <mapping class="bertosh.entities.UserOrder"/>
-    <mapping class="bertosh.entities.Role"/>
-    <mapping class="bertosh.entities.Skill"/>
+    <mapping class="by.bsuir.spp.entities.Category"/>
+    <mapping class="by.bsuir.spp.entities.Offer"/>
+    <mapping class="by.bsuir.spp.entities.Statistic"/>
+    <mapping class="by.bsuir.spp.entities.User"/>
+    <mapping class="by.bsuir.spp.entities.UserOrder"/>
+    <mapping class="by.bsuir.spp.entities.Role"/>
+    <mapping class="by.bsuir.spp.entities.Skill"/>
   </session-factory>
 </hibernate-configuration>
