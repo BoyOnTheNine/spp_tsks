@@ -89,6 +89,18 @@ public class OfferService {
         }
     }
 
+    public boolean deleteByArray(Long[] array) throws DbException {
+        try {
+            for (Long id : array) {
+                this.delete(id);
+            }
+            return true;
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw new DbException("Exception in deleting offer transaction");
+        }
+    }
+
     public List getAll() throws DbException {
         try {
             return dao.getAll();

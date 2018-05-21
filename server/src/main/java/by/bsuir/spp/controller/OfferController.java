@@ -3,6 +3,7 @@ package by.bsuir.spp.controller;
 import by.bsuir.spp.exceptions.DbException;
 import by.bsuir.spp.exceptions.EntityNotFoundException;
 import by.bsuir.spp.entities.Offer;
+import by.bsuir.spp.payload.DeletingArray;
 import by.bsuir.spp.service.OfferService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -67,6 +68,16 @@ public class OfferController {
             return new ResponseEntity(HttpStatus.OK);
         } else {
             throw new EntityNotFoundException("Unable to find offer with id = " + id);
+        }
+    }
+
+    @DeleteMapping("/offers/array")
+    public ResponseEntity deleteMany(@RequestBody DeletingArray array) throws DbException {
+        if (service.deleteByArray(array.getArray())) {
+            logger.info("Deleted offers");
+            return new ResponseEntity(HttpStatus.OK);
+        } else {
+            throw new EntityNotFoundException("Unable to find offers");
         }
     }
 }
