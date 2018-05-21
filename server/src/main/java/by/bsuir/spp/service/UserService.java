@@ -145,4 +145,16 @@ public class UserService {
             throw new DbException("Exception in getting user by login transaction");
         }
     }
+
+    public boolean deleteUserSkill(Long userId, Long skillId) throws DbException {
+        try {
+            User user = dao.getById(userId);
+            user.getSkills().removeIf(skill -> skill.getId() == skillId);
+            dao.update(user);
+            return true;
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw new DbException("Exception while deleting user skill");
+        }
+    }
 }
