@@ -33,4 +33,30 @@ public class DocumentController {
                 .contentType(MediaType.APPLICATION_PDF)
                 .body(new InputStreamResource(bis));
     }
+
+    @GetMapping(value = "/xls/{id}", produces = MediaType.APPLICATION_XML_VALUE)
+    public ResponseEntity<InputStreamResource> getOrderXLS(@PathVariable Long id) {
+        ByteArrayInputStream bis = service.getOrderXLS(id);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "inline; filename=order.xls");
+        return ResponseEntity
+                .ok()
+                .headers(headers)
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(new InputStreamResource(bis));
+    }
+
+    @GetMapping(value = "/csv/{id}", produces = "text/csv")
+    public ResponseEntity<InputStreamResource> getOrderCSV(@PathVariable Long id) {
+        ByteArrayInputStream bis = service.getOrderCSV(id);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "inline; filename=order.csv");
+        return ResponseEntity
+                .ok()
+                .headers(headers)
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(new InputStreamResource(bis));
+    }
 }

@@ -2,7 +2,6 @@ package by.bsuir.spp.documents;
 
 import by.bsuir.spp.entities.User;
 import by.bsuir.spp.entities.UserOrder;
-import com.itextpdf.text.pdf.BaseFont;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Component;
@@ -19,9 +18,6 @@ public class XLSDocument {
     public static ByteArrayInputStream buildXLSDocument(UserOrder order) throws Exception {
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-
-        BaseFont helvetica = BaseFont.createFont("c:/Windows/Fonts/arial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
-        com.itextpdf.text.Font font = new com.itextpdf.text.Font(helvetica, 10, com.itextpdf.text.Font.NORMAL);
 
         Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet("Order");
