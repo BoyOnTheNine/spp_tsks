@@ -4,6 +4,8 @@ import by.bsuir.spp.exceptions.DbException;
 import by.bsuir.spp.exceptions.EntityNotFoundException;
 import by.bsuir.spp.entities.Category;
 import by.bsuir.spp.service.CategoryService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,13 +20,8 @@ public class CategoryController {
     @Autowired
     private CategoryService service;
 
-    /**
-     * Return <tt>ResponseEntity</tt> that contains <tt>List<tt/> of all categories
-     * from database
-     * @return List of all categories from database
-     * @throws EntityNotFoundException if category not founded
-     * @throws DbException if any other exceptions
-     */
+    private final static Logger logger = LogManager.getLogger(CategoryController.class);
+
     @GetMapping("/categories")
     public ResponseEntity getAll() throws DbException {
         List list = service.getAll();
@@ -35,16 +32,6 @@ public class CategoryController {
         }
     }
 
-    /**
-     * Return <tt>ResponseEntity</tt> that contains <tt>Category</tt> with
-     * <tt>HttpStatus</tt>
-     * @param id of <tt>Category</tt> to be founded
-     * @return <tt>ResponseEntity</tt> with <tt>Category</tt> and <tt>HttpStatus</tt>
-     *         OK if <tt>Category</tt> was founded or <tt>ResponseEntity</tt> with
-     *         <tt>HttpStatus</tt> NOT_FOUND if not
-     * @throws EntityNotFoundException if category not founded
-     * @throws DbException if any other exceptions
-     */
     @GetMapping("/categories/{id}")
     public ResponseEntity getById(@PathVariable Long id) throws DbException {
         Category category = service.getById(id);
@@ -55,52 +42,28 @@ public class CategoryController {
         }
     }
 
-    /**
-     * Return updated <tt>Category</tt>
-     * @param id of <tt>Category</tt> to be updated
-     * @param category <tt>Category</tt> with fields that should be updated
-     * @return <tt>ResponseEntity</tt> with <tt>Category</tt> and <tt>HttpStatus</tt>
-     *         OK if <tt>Category</tt> was updated or <tt>ResponseEntity</tt> with
-     *         <tt>HttpStatus</tt> NOT_FOUND if not
-     * @throws EntityNotFoundException if category not founded
-     * @throws DbException if any other exceptions
-     */
     @PutMapping("/categories/{id}")
     public ResponseEntity update(@PathVariable Long id, @RequestBody Category category) throws DbException {
         category = service.update(id, category);
         if (category != null) {
+            logger.info("Category " + category.getName() + " was updated");
             return new ResponseEntity<>(category, HttpStatus.OK);
         } else {
             throw new EntityNotFoundException("Unable to find category with id = " + id);
         }
     }
 
-    /**
-     * Return new <tt>Category</tt> that was created
-     * @param category <tt>Category</tt> that should be created
-     * @return <tt>ResponseEntity</tt> with <tt>Category</tt> and <tt>HttpStatus</tt>
-     *         OK if <tt>Category</tt> was created
-     * @@throws EntityNotFoundException if category not founded
-     * @throws DbException if any other exceptions
-     */
     @PostMapping("/categories")
     public ResponseEntity<Category> create(@RequestBody Category category) throws DbException {
         category = service.create(category);
+        logger.info("Category " + category.getName() + " was created");
         return new ResponseEntity<>(category, HttpStatus.CREATED);
     }
 
-    /**
-     * Delete <tt>Category</tt> this some id
-     * @param id of <tt>Category</tt> that should be deleted
-     * @return <tt>ResponseEntity</tt> with <tt>HttpStatus</tt OK if <tt>Category</tt>
-     *         was deleted or <tt>ResponseEntity</tt> with <tt>HttpStatus</tt> NOT_FOUND
-     *         if not
-     * @throws EntityNotFoundException if category not founded
-     * @throws DbException if any other exceptions
-     */
     @DeleteMapping("/categories/{id}")
     public ResponseEntity delete(@PathVariable Long id) throws DbException {
         if (service.delete(id)) {
+            logger.info("Category with id = " + id + " was deleted");
             return new ResponseEntity(HttpStatus.OK);
         } else {
             throw new EntityNotFoundException("Unable to find category with id = " + id);
