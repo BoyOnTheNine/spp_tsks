@@ -80,13 +80,23 @@ public class UserController {
         }
     }
 
-    @GetMapping("/user/login/{login}")
+    @GetMapping("/users/login/{login}")
     public ResponseEntity getByLogin(@PathVariable String login) throws DbException {
         User user = service.getByLogin(login);
         if (user != null) {
             return new ResponseEntity<>(user, HttpStatus.OK);
         } else {
             throw new EntityNotFoundException("Unable to find user with login = " + login);
+        }
+    }
+
+    @DeleteMapping("/users/{userId}/{skillId}")
+    public ResponseEntity deleteUserSkill(@PathVariable Long userId, @PathVariable Long skillId) throws DbException {
+        if(service.deleteUserSkill(userId, skillId)) {
+            logger.info("Deleted user with id = " + userId + " skill " + skillId);
+            return new ResponseEntity(HttpStatus.OK);
+        } else {
+            throw new EntityNotFoundException("Unable to find user with id = " + userId);
         }
     }
 }
