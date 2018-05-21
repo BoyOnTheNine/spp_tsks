@@ -1,5 +1,7 @@
 package by.bsuir.spp.mail;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 import javax.mail.*;
@@ -13,6 +15,8 @@ public class SSLEmailSender {
     private String username = "freelanceplatformspp@gmail.com";
     private String password = "ithinkitsnormal";
     private Properties props;
+
+    private final static Logger logger = LogManager.getLogger(SSLEmailSender.class);
 
     public SSLEmailSender() {
         props = new Properties();
@@ -47,7 +51,9 @@ public class SSLEmailSender {
             message.setText(text);
 
             Transport.send(message);
+            logger.info("Sent email to " + toEmail);
         } catch (MessagingException e) {
+            logger.error(e.getMessage());
             throw new RuntimeException(e);
         }
     }

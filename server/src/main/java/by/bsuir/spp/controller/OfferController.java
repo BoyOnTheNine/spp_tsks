@@ -71,7 +71,9 @@ public class OfferController {
         }
     }
 
-    @DeleteMapping("/offers/array")
+    //In this case we are deleting by POST request because Angular HttpClient not supported
+    //body in DELETE request
+    @PostMapping("/offers/array")
     public ResponseEntity deleteMany(@RequestBody DeletingArray array) throws DbException {
         if (service.deleteByArray(array.getArray())) {
             logger.info("Deleted offers");

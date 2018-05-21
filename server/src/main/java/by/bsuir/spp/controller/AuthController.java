@@ -6,6 +6,8 @@ import by.bsuir.spp.payload.SignUpRequest;
 import by.bsuir.spp.repositories.UserRepository;
 import by.bsuir.spp.security.JwtTokenProvider;
 import by.bsuir.spp.service.RoleService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -48,6 +50,8 @@ public class AuthController {
     @Autowired
     private JwtTokenProvider tokenProvider;
 
+    private final static Logger logger = LogManager.getLogger(AuthController.class);
+
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
@@ -60,6 +64,7 @@ public class AuthController {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
+        logger.info("User " + loginRequest.getLoginOrEmail() + " has authorized");
         String jwt = tokenProvider.generateToken(authentication);
         HttpHeaders headers = new HttpHeaders();
         return new ResponseEntity<>(new JwtAuthenticationResponse(jwt), headers, HttpStatus.OK);
@@ -90,6 +95,7 @@ public class AuthController {
         user.setRoles(Collections.singleton(userRole));
 
         User result = userRepository.save(user);
+        logger.info("New user " + signUpRequest.getLogin() + " has registered.");
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentContextPath().path("/users/{username}")
