@@ -13,8 +13,6 @@ import java.io.ByteArrayInputStream;
 public class DocumentService {
 
     @Autowired
-    private PDFDocument pdfDocument;
-    @Autowired
     private ExcelDocument excelDocument;
     @Autowired
     private UserOrderService service;
