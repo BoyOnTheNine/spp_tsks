@@ -1,7 +1,9 @@
 package by.bsuir.spp.service;
 
 import by.bsuir.spp.entities.User;
+import by.bsuir.spp.mail.AutoMailDispatcher;
 import by.bsuir.spp.mail.SSLEmailSender;
+import by.bsuir.spp.payload.ConfigDispatchRequest;
 import by.bsuir.spp.repositories.UserRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,7 +19,8 @@ public class EmailService {
 
     @Autowired
     private SSLEmailSender emailSender;
-
+    @Autowired
+    private AutoMailDispatcher dispatcher;
     @Autowired
     private UserRepository userRepository;
 
@@ -44,5 +47,14 @@ public class EmailService {
             logger.error(e.getMessage());
             return false;
         }
+    }
+
+    public ConfigDispatchRequest getDispatchDetails() {
+        ConfigDispatchRequest request = new ConfigDispatchRequest();
+        request.setMessageSubject(dispatcher.getMessageSubject());
+        request.setMessageText(dispatcher.getMessageText());
+        request.setHour(dispatcher.getHour());
+        request.setMinute(dispatcher.getMinute());
+        return request;
     }
 }
