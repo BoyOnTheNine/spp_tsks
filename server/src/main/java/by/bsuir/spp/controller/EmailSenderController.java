@@ -1,6 +1,8 @@
 package by.bsuir.spp.controller;
 
 import by.bsuir.spp.exceptions.AppException;
+import by.bsuir.spp.mail.AutoMailDispatcher;
+import by.bsuir.spp.payload.ConfigDispatchRequest;
 import by.bsuir.spp.payload.EmailRequest;
 import by.bsuir.spp.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,8 @@ public class EmailSenderController {
 
     @Autowired
     private EmailService service;
+    @Autowired
+    private AutoMailDispatcher autoMailDispatcher;
 
     @PutMapping("/send")
     public ResponseEntity send(@RequestBody EmailRequest emailRequest) {
@@ -32,5 +36,20 @@ public class EmailSenderController {
         } else {
             return new ResponseEntity<>(new AppException("Cannot send email to all users"), HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @PostMapping("/configureDispatch")
+    public ResponseEntity configureDispatch(@RequestBody ConfigDispatchRequest dispatchRequest) {
+        autoMailDispatcher.setMessageSubject(dispatchRequest.getMessageSubject());
+        autoMailDispatcher.setMessageText(dispatchRequest.getMessageText());
+        autoMailDispatcher.setHour(dispatchRequest.getHour());
+        autoMailDispatcher.setMinute(dispatchRequest.getMinute());
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @GetMapping("/dispatchDetails")
+    public ResponseEntity getDispatchDetails() {
+        ConfigDispatchRequest configDispatch = service.getDispatchDetails();
+        return new ResponseEntity<>(configDispatch, HttpStatus.OK);
     }
 }
