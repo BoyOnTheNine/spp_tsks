@@ -6,11 +6,9 @@ import by.bsuir.spp.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -24,9 +22,9 @@ public class AutoMailDispatcher {
     private UserService userService;
 
     private String messageSubject = "Test subject";
-    private String messageText = "Test auto mail";
-    private int hour = 15;
-    private int minute = 28;
+    private String messageText = "Итоговая сдача лабы";
+    private int hour = 18;
+    private int minute = 27;
 
     private static final Logger log = LoggerFactory.getLogger(AutoMailDispatcher.class);
 
@@ -44,6 +42,7 @@ public class AutoMailDispatcher {
                             "freelanceplatformspp@gmail.com",
                             user.getEmail());
                 }
+                log.info("Send email");
             } catch (DbException e) {
                 e.printStackTrace();
             }

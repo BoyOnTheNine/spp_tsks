@@ -25,7 +25,7 @@ public class DocumentController {
         ByteArrayInputStream bis = service.getOrderPDF(id);
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Disposition", "inline; filename=order.pdf");
+        headers.add("Content-Disposition", "attachment; filename=order.pdf");
 
         return ResponseEntity
                 .ok()
@@ -34,29 +34,29 @@ public class DocumentController {
                 .body(new InputStreamResource(bis));
     }
 
-    @GetMapping(value = "/xls/{id}", produces = MediaType.APPLICATION_XML_VALUE)
+    @GetMapping(value = "/xls/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<InputStreamResource> getOrderXLS(@PathVariable Long id) {
         ByteArrayInputStream bis = service.getOrderXLS(id);
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Disposition", "inline; filename=order.xls");
+        headers.add("Content-Disposition", "attachment; filename=order.xls");
         return ResponseEntity
                 .ok()
                 .headers(headers)
-                .contentType(MediaType.APPLICATION_PDF)
+                .contentType(MediaType.parseMediaType("application/vnd.ms-excel"))
                 .body(new InputStreamResource(bis));
     }
 
-    @GetMapping(value = "/csv/{id}", produces = "text/csv")
+    @GetMapping(value = "/csv/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<InputStreamResource> getOrderCSV(@PathVariable Long id) {
         ByteArrayInputStream bis = service.getOrderCSV(id);
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Disposition", "inline; filename=order.csv");
+        headers.add("Content-Disposition", "attachment; filename=order.csv");
         return ResponseEntity
                 .ok()
                 .headers(headers)
-                .contentType(MediaType.APPLICATION_PDF)
+                .contentType(MediaType.parseMediaType("text/csv"))
                 .body(new InputStreamResource(bis));
     }
 }
